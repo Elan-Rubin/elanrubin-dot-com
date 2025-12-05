@@ -19,10 +19,7 @@ jobs:
         run: npm install --global prettier
 
       - name: Format code
-        run: |
-          prettier --write "**/*.{html,css,js,json,md}" \
-            --ignore-path .git \
-            --ignore-path node_modules \
+        run: prettier --write "**/*.{html,css,js,json,md}"
 
       - name: Commit changes
         run: |

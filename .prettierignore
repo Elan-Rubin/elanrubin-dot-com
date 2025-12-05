@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Git
+.git/
+
+# Build outputs
+dist/
+build/
+
+# Music and media files
+*.mp3
+*.mp4
+*.wav
+*.avi
+
+# PDF files
+*.pdf
+
+# Images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.webp
