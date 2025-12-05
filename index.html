@@ -27,17 +27,12 @@
     <link rel="stylesheet" href="/css/cookie.css">
 
     <script>
-        //detect if not on the computer, and then redirect
-        function detectMobile() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        }
-
-        function redirectIfMobile() {
-            if (detectMobile()) {
-                window.location.href = "mobile-index.html";
+        //detect if not on the computer, and then redirect immediately
+        (function() {
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                window.location.replace("mobile-index.html");
             }
-        }
-        window.onload = redirectIfMobile;
+        })();
     </script>
 </head>
 

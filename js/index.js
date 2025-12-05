@@ -257,20 +257,34 @@ function findWindowByTitle(title) {
 
 // Update window controls to include visibility toggle
 function setupWindowControls(window) {
-    
+
     const minimizeBtn = window.querySelector('.minimize-btn');
     const maximizeBtn = window.querySelector('.maximize-btn');
     const closeBtn = window.querySelector('.close-btn');
     const windowTitle = window.querySelector('.window-title').textContent.trim();
+    const windowContent = window.querySelector('.window-content');
 
     minimizeBtn.addEventListener('click', function() {
         this.style.animation = 'bounce 0.3s';
         setTimeout(() => this.style.animation = '', 300);
+
+        // Trigger wiggle animation
+        window.classList.add('wiggle');
+        setTimeout(() => window.classList.remove('wiggle'), 500);
     });
 
     maximizeBtn.addEventListener('click', function() {
         this.style.animation = 'bounce 0.3s';
         setTimeout(() => this.style.animation = '', 300);
+
+        // Toggle minimized state
+        if (windowContent.style.display === 'none') {
+            windowContent.style.display = 'block';
+            window.classList.remove('minimized');
+        } else {
+            windowContent.style.display = 'none';
+            window.classList.add('minimized');
+        }
     });
 
     closeBtn.addEventListener('click', function() {
