@@ -1,367 +1,461 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>elanrubin.com - mobile</title>
-    <link rel="icon" type="image/x-icon" href="/images/star_favicon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/images/star_favicon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
     <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 1rem;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding-top: 5rem;
+        background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+      }
+
+      /* Header styles */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(244, 244, 244, 0.95);
+        padding: 1.25rem;
+        text-align: center;
+        z-index: 1000;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Main content styles */
+      .container {
+        max-width: 75rem;
+        margin: 0 auto;
+        padding: 1.25rem;
+      }
+
+      /* About section styles */
+      .about {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2.5rem;
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        /* transform: translateY(20px); */
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      .profile-img {
+        flex: 1;
+        min-width: 12.5rem;
+        max-width: 10rem;
+      }
+
+      .profile-img img {
+        width: 100%;
+        height: auto;
+        border-radius: 0.625rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .info {
+        flex: 2;
+        min-width: 18.75rem;
+      }
+
+      /* App Icons Grid */
+      .app-icons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        padding: 1rem;
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        animation: fadeIn 0.6s ease 0.3s forwards;
+      }
+
+      .app-icon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: #333;
+        padding: 0.5rem;
+      }
+
+      .app-icon i {
+        font-size: 1.5rem;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.75rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        margin-bottom: 0.5rem;
+      }
+
+      .app-icon span {
+        font-size: 0.875rem;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 100%;
+      }
+
+      /* Portfolio grid styles */
+      .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(15.625rem, 1fr));
+        gap: 2.5rem;
+      }
+
+      .portfolio-item {
+        border: 0.0625rem solid #ddd;
+        border-radius: 0.625rem;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        /* transform: translateY(20px); */
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      .portfolio-item .image-container {
+        width: 100%;
+        padding-top: 56.25%; /* 16:9 aspect ratio */
+        position: relative;
+        overflow: hidden;
+      }
+
+      .portfolio-item img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .portfolio-item-info {
+        padding: 1.25rem;
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          /* transform: translateY(20px); */
         }
-    
+        to {
+          opacity: 1;
+          /* transform: translateY(0); */
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Stagger portfolio items animation */
+      .portfolio-item {
+        animation-delay: calc(0.1s * var(--index, 0));
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 48rem) {
         html {
-            font-size: 1rem;
-            scroll-behavior: smooth;
+          font-size: 0.875rem;
         }
-    
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            padding-top: 5rem;
-            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
-        }
-    
-        /* Header styles */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(244, 244, 244, 0.95);
-            padding: 1.25rem;
-            text-align: center;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-        }
-    
-        /* Main content styles */
-        .container {
-            max-width: 75rem;
-            margin: 0 auto;
-            padding: 1.25rem;
-        }
-    
-        /* About section styles */
+
         .about {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2.5rem;
-            margin-bottom: 2.5rem;
-            opacity: 0;
-            /* transform: translateY(20px); */
-            animation: fadeInUp 0.6s ease forwards;
-        }
-    
-        .profile-img {
-            flex: 1;
-            min-width: 12.5rem;
-            max-width: 10rem;
-        }
-    
-        .profile-img img {
-            width: 100%;
-            height: auto;
-            border-radius: 0.625rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-    
-        .info {
-            flex: 2;
-            min-width: 18.75rem;
+          flex-direction: column;
         }
 
-        /* App Icons Grid */
         .app-icons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            padding: 1rem;
-            margin-bottom: 2.5rem;
-            opacity: 0;
-            animation: fadeIn 0.6s ease 0.3s forwards;
+          grid-template-columns: repeat(4, 1fr);
         }
+      }
 
-        .app-icon {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #333;
-            padding: 0.5rem;
+      @media (max-width: 30rem) {
+        .app-icons {
+          grid-template-columns: repeat(3, 1fr);
         }
-
-        .app-icon i {
-            font-size: 1.5rem;
-            width: 3rem;
-            height: 3rem;
-            border-radius: 0.75rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            margin-bottom: 0.5rem;
-        }
-
-        .app-icon span {
-            font-size: 0.875rem;
-            text-align: center;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 100%;
-        }
-    
-        /* Portfolio grid styles */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(15.625rem, 1fr));
-            gap: 2.5rem;
-        }
-    
-        .portfolio-item {
-            border: 0.0625rem solid #ddd;
-            border-radius: 0.625rem;
-            overflow: hidden;
-            background: white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            /* transform: translateY(20px); */
-            animation: fadeInUp 0.6s ease forwards;
-        }
-    
-        .portfolio-item .image-container {
-            width: 100%;
-            padding-top: 56.25%; /* 16:9 aspect ratio */
-            position: relative;
-            overflow: hidden;
-        }
-    
-        .portfolio-item img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-    
-        .portfolio-item-info {
-            padding: 1.25rem;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                /* transform: translateY(20px); */
-            }
-            to {
-                opacity: 1;
-                /* transform: translateY(0); */
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Stagger portfolio items animation */
-        .portfolio-item {
-            animation-delay: calc(0.1s * var(--index, 0));
-        }
-    
-        /* Responsive adjustments */
-        @media (max-width: 48rem) {
-            html {
-                font-size: 0.875rem;
-            }
-    
-            .about {
-                flex-direction: column;
-            }
-    
-            .app-icons {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        @media (max-width: 30rem) {
-            .app-icons {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <h1>elanrubin.com</h1>
+      <h1>elanrubin.com</h1>
     </header>
 
     <div class="container">
-        <section class="about">
-            <div class="profile-img">
-                <img src="/images/slideshow/slideshow_biggie_2.png" alt="Profile Picture">
-            </div>
-            <div class="info">
-                <h2>About Me</h2>
-                <p>Hello! My name is Elan Rubin, and I'm a computer science student at Drexel University. My interests lie in the intersection between technology and art.</p>
-            </div>
-        </section>
+      <section class="about">
+        <div class="profile-img">
+          <img
+            src="/images/slideshow/slideshow_biggie_2.png"
+            alt="Profile Picture"
+          />
+        </div>
+        <div class="info">
+          <h2>About Me</h2>
+          <p>
+            Hello! My name is Elan Rubin, and I'm a computer science student at
+            Drexel University. My interests lie in the intersection between
+            technology and art.
+          </p>
+        </div>
+      </section>
 
-        <div class="app-icons">
-            <a href="https://www.linkedin.com/in/elan-rubin/" class="app-icon" target="_blank">
-                <i class="fab fa-linkedin" style="background-color: #0A66C2;"></i>
-                <span>LinkedIn</span>
-            </a>
-            <a href="https://github.com/Elan-Rubin" class="app-icon" target="_blank">
-                <i class="fab fa-github" style="background-color: #181717;"></i>
-                <span>GitHub</span>
-            </a>
-            <a href="https://drive.google.com/file/d/1TgctxSFvbBcZqebGM-rIrlLKlNhXgNFE/view?usp=sharing" class="app-icon" target="_blank">
-                <i class="fa-solid fa-file" style="background-color: #E20001;"></i>
-                <span>Resume</span>
-            </a>
-            <!-- <a class="app-icon" onclick="window.open('mailto:edr53@drexel.edu?subject=Hello%20Elan!&body=I%20love%20your%20website%20and%20am%20interested%20in%20hiring%20you.%0ASincerely%2C%0A%5BYour%20Name%5D'); return false;">
+      <div class="app-icons">
+        <a
+          href="https://www.linkedin.com/in/elan-rubin/"
+          class="app-icon"
+          target="_blank"
+        >
+          <i class="fab fa-linkedin" style="background-color: #0a66c2"></i>
+          <span>LinkedIn</span>
+        </a>
+        <a
+          href="https://github.com/Elan-Rubin"
+          class="app-icon"
+          target="_blank"
+        >
+          <i class="fab fa-github" style="background-color: #181717"></i>
+          <span>GitHub</span>
+        </a>
+        <a
+          href="https://drive.google.com/file/d/1TgctxSFvbBcZqebGM-rIrlLKlNhXgNFE/view?usp=sharing"
+          class="app-icon"
+          target="_blank"
+        >
+          <i class="fa-solid fa-file" style="background-color: #e20001"></i>
+          <span>Resume</span>
+        </a>
+        <!-- <a class="app-icon" onclick="window.open('mailto:edr53@drexel.edu?subject=Hello%20Elan!&body=I%20love%20your%20website%20and%20am%20interested%20in%20hiring%20you.%0ASincerely%2C%0A%5BYour%20Name%5D'); return false;">
                 <i class="fas fa-envelope" style="background-color: #9ECBFF;"></i>
                 <span>Email</span>
             </a> -->
-            <a href="https://elanmakesgames.itch.io/" class="app-icon" target="_blank">
-                <i class="fa-brands fa-itch-io" style="background-color: #FA5C5C;"></i>
-                <span>itch.io</span>
-            </a>
-            <a href="https://www.etsy.com/shop/Legoco" class="app-icon" target="_blank">
-                <i class="fab fa-etsy" style="background-color: #F16521;"></i>
-                <span>Etsy</span>
-            </a>
-            <a href="https://www.instagram.com/elan_rubin/" class="app-icon" target="_blank">
-                <i class="fab fa-instagram" style="background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4);"></i>
-                <span>Instagram</span>
-            </a>
-        </div>
+        <a
+          href="https://elanmakesgames.itch.io/"
+          class="app-icon"
+          target="_blank"
+        >
+          <i class="fa-brands fa-itch-io" style="background-color: #fa5c5c"></i>
+          <span>itch.io</span>
+        </a>
+        <a
+          href="https://www.etsy.com/shop/Legoco"
+          class="app-icon"
+          target="_blank"
+        >
+          <i class="fab fa-etsy" style="background-color: #f16521"></i>
+          <span>Etsy</span>
+        </a>
+        <a
+          href="https://www.instagram.com/elan_rubin/"
+          class="app-icon"
+          target="_blank"
+        >
+          <i
+            class="fab fa-instagram"
+            style="
+              background: linear-gradient(
+                45deg,
+                #f58529,
+                #dd2a7b,
+                #8134af,
+                #515bd4
+              );
+            "
+          ></i>
+          <span>Instagram</span>
+        </a>
+      </div>
 
-        <section class="portfolio">
-            <h2>My Portfolio</h2>
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <div class="image-container">
-                        <img src="images/portfolio/screenshot_bird.png" alt="BirderBase">
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h3>BirderBase</h3>
-                        <p>Date: Spring 2024</p>
-                        <p>Tools: JS, HTML, CSS</p>
-                        <p>Description: Collaborated to develop a web app for bird identification and data visualization.</p>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="image-container">
-                        <img src="images/portfolio/screenshot_equity.png" alt="EdEquity">
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h3>EdEquity</h3>
-                        <p>Date: Spring 2024</p>
-                        <p>Tools: JS, HTML, CSS</p>
-                        <p>Description: Developed an interactive site for educational resources. Competed in the Advanced category at Philadelphia CodeFest.</p>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="image-container">
-                        <img src="images/portfolio/screenshot_munch.png" alt="Munch Match">
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h3>Munch Match</h3>
-                        <p>Date: 2024</p>
-                        <p>Tools: JS, HTML, CSS, Apps Script</p>
-                        <p>Description: Designed and developed an intelligent food finder that matches users' flavor preferences to a dish.</p>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="image-container">
-                        <img src="images/portfolio/screenshot_elanmakesgames.png" alt="ElanMakesGames">
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h3>ElanMakesGames</h3>
-                        <p>Date: 2020-Present</p>
-                        <p>Tools: C#, Unity, CSS</p>
-                        <p>Description: Worked to maintain 20+ personal projects and games developed by me and my friends. 50k+ lifetime users.</p>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="image-container">
-                        <img src="images/portfolio/screenshot_essay.png" alt="Extended Essay">
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h3>Extended Essay - Genetic Algorithms</h3>
-                        <p>Date: 2022</p>
-                        <p>Tools: C#, Google Sheets, Apps Script</p>
-                        <p>Description: Wrote a 50-page scientific paper on genetic algorithms and the Travelling Salesman Problem.</p>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="image-container">
-                        <img src="images/portfolio/screenshot_sandwich.png" alt="Sandwich Stacker">
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h3>Sandwich Stacker</h3>
-                        <p>Date: 2023</p>
-                        <p>Tools: C#, Unity, Adobe Photoshop</p>
-                        <p>Description: Led the production and programming of a mobile/web game with nearly 15k plays.</p>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="image-container">
-                        <img src="images/portfolio/screenshot_inventory.png" alt="Inventory Management App">
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h3>Inventory Management App</h3>
-                        <p>Date: 2021</p>
-                        <p>Tools: Java, NetBeans, Adobe Illustrator</p>
-                        <p>Description: Followed client advisory, creating a desktop GUI for small business inventory management.</p>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="image-container">
-                        <img src="images/portfolio/screenshot_abortion.png" alt="Social Justice Hackathon 2023">
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h3>Social Justice Hackathon 2023</h3>
-                        <p>Date: 2023</p>
-                        <p>Tools: JavaScript, HTML, CSS</p>
-                        <p>Description: Consulted experts and followed client instructions to deploy an informational site centered around healthcare for teens.</p>
-                    </div>
-                </div>
+      <section class="portfolio">
+        <h2>My Portfolio</h2>
+        <div class="portfolio-grid">
+          <div class="portfolio-item">
+            <div class="image-container">
+              <img
+                src="images/portfolio/screenshot_bird.png"
+                alt="BirderBase"
+              />
             </div>
-        </section>
+            <div class="portfolio-item-info">
+              <h3>BirderBase</h3>
+              <p>Date: Spring 2024</p>
+              <p>Tools: JS, HTML, CSS</p>
+              <p>
+                Description: Collaborated to develop a web app for bird
+                identification and data visualization.
+              </p>
+            </div>
+          </div>
+
+          <div class="portfolio-item">
+            <div class="image-container">
+              <img
+                src="images/portfolio/screenshot_equity.png"
+                alt="EdEquity"
+              />
+            </div>
+            <div class="portfolio-item-info">
+              <h3>EdEquity</h3>
+              <p>Date: Spring 2024</p>
+              <p>Tools: JS, HTML, CSS</p>
+              <p>
+                Description: Developed an interactive site for educational
+                resources. Competed in the Advanced category at Philadelphia
+                CodeFest.
+              </p>
+            </div>
+          </div>
+
+          <div class="portfolio-item">
+            <div class="image-container">
+              <img
+                src="images/portfolio/screenshot_munch.png"
+                alt="Munch Match"
+              />
+            </div>
+            <div class="portfolio-item-info">
+              <h3>Munch Match</h3>
+              <p>Date: 2024</p>
+              <p>Tools: JS, HTML, CSS, Apps Script</p>
+              <p>
+                Description: Designed and developed an intelligent food finder
+                that matches users' flavor preferences to a dish.
+              </p>
+            </div>
+          </div>
+
+          <div class="portfolio-item">
+            <div class="image-container">
+              <img
+                src="images/portfolio/screenshot_elanmakesgames.png"
+                alt="ElanMakesGames"
+              />
+            </div>
+            <div class="portfolio-item-info">
+              <h3>ElanMakesGames</h3>
+              <p>Date: 2020-Present</p>
+              <p>Tools: C#, Unity, CSS</p>
+              <p>
+                Description: Worked to maintain 20+ personal projects and games
+                developed by me and my friends. 50k+ lifetime users.
+              </p>
+            </div>
+          </div>
+
+          <div class="portfolio-item">
+            <div class="image-container">
+              <img
+                src="images/portfolio/screenshot_essay.png"
+                alt="Extended Essay"
+              />
+            </div>
+            <div class="portfolio-item-info">
+              <h3>Extended Essay - Genetic Algorithms</h3>
+              <p>Date: 2022</p>
+              <p>Tools: C#, Google Sheets, Apps Script</p>
+              <p>
+                Description: Wrote a 50-page scientific paper on genetic
+                algorithms and the Travelling Salesman Problem.
+              </p>
+            </div>
+          </div>
+
+          <div class="portfolio-item">
+            <div class="image-container">
+              <img
+                src="images/portfolio/screenshot_sandwich.png"
+                alt="Sandwich Stacker"
+              />
+            </div>
+            <div class="portfolio-item-info">
+              <h3>Sandwich Stacker</h3>
+              <p>Date: 2023</p>
+              <p>Tools: C#, Unity, Adobe Photoshop</p>
+              <p>
+                Description: Led the production and programming of a mobile/web
+                game with nearly 15k plays.
+              </p>
+            </div>
+          </div>
+
+          <div class="portfolio-item">
+            <div class="image-container">
+              <img
+                src="images/portfolio/screenshot_inventory.png"
+                alt="Inventory Management App"
+              />
+            </div>
+            <div class="portfolio-item-info">
+              <h3>Inventory Management App</h3>
+              <p>Date: 2021</p>
+              <p>Tools: Java, NetBeans, Adobe Illustrator</p>
+              <p>
+                Description: Followed client advisory, creating a desktop GUI
+                for small business inventory management.
+              </p>
+            </div>
+          </div>
+
+          <div class="portfolio-item">
+            <div class="image-container">
+              <img
+                src="images/portfolio/screenshot_abortion.png"
+                alt="Social Justice Hackathon 2023"
+              />
+            </div>
+            <div class="portfolio-item-info">
+              <h3>Social Justice Hackathon 2023</h3>
+              <p>Date: 2023</p>
+              <p>Tools: JavaScript, HTML, CSS</p>
+              <p>
+                Description: Consulted experts and followed client instructions
+                to deploy an informational site centered around healthcare for
+                teens.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add animation delay to portfolio items
-            document.querySelectorAll('.portfolio-item').forEach((item, index) => {
-                item.style.setProperty('--index', index);
-            });
+      document.addEventListener("DOMContentLoaded", function () {
+        // Add animation delay to portfolio items
+        document.querySelectorAll(".portfolio-item").forEach((item, index) => {
+          item.style.setProperty("--index", index);
         });
+      });
     </script>
-</body>
+  </body>
 </html>
