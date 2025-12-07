@@ -12,7 +12,6 @@ html {
   background-color: var(--color-off-white);
   /* font-family: Arial, sans-serif; */
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  /* font-weight: bold; */
 }
 
 .window {
@@ -67,8 +66,9 @@ html {
   height: 1rem;
   margin-left: 0.25rem;
   border: none;
-  /* border: 3px black solid; */
-  font-size: 12px;
+  background: transparent;
+  font-size: 14px;
+  color: var(--color-white);
   cursor:
     url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>')
       12 6,
@@ -76,40 +76,17 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.1s;
-  /* border-radius: 0.25rem; */
-  border-radius: 50%;
+  transition: opacity 0.2s;
+  opacity: 0.7;
 }
 
 .window-button:hover {
-  transform: scale(1.1);
-}
-
-.minimize-btn {
-  background-color: var(--color-green);
-}
-
-.maximize-btn {
-  background-color: var(--color-yellow);
-  font-size: 10px;
-}
-
-.close-btn {
-  background-color: var(--color-red);
+  opacity: 1;
 }
 
 .window-content {
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.15);
-}
-
-.notepad {
-  /* background-color: var(--color-off-white); */
-  /* font-family: 'Courier New', Courier, monospace; */
-}
-
-.notepad .window-header {
-  /* background-color: var(--color-dark-blue); */
 }
 
 .playlist-window {
@@ -594,28 +571,4 @@ html {
     transform: scale(1);
     opacity: 1;
   }
-}
-
-@keyframes wiggle {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  10%,
-  30%,
-  50%,
-  70%,
-  90% {
-    transform: rotate(-1deg);
-  }
-  20%,
-  40%,
-  60%,
-  80% {
-    transform: rotate(1deg);
-  }
-}
-
-.window.wiggle {
-  animation: wiggle 0.5s;
 }
