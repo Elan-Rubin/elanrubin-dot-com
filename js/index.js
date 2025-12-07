@@ -328,7 +328,9 @@ function addTerminalCommand(command) {
   typeChar();
 
   // Keep only last 3 commands
-  const allCommands = terminalCommands.querySelectorAll(".terminal-command-line");
+  const allCommands = terminalCommands.querySelectorAll(
+    ".terminal-command-line",
+  );
   if (allCommands.length > 3) {
     terminalCommands.removeChild(allCommands[0]);
   }
