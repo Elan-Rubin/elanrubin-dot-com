@@ -8,16 +8,14 @@ node_modules/
 dist/
 build/
 
-# Music and media files
+# Media
+images/
+pdf/
 *.mp3
 *.mp4
 *.wav
 *.avi
-
-# PDF files
 *.pdf
-
-# Images
 *.png
 *.jpg
 *.jpeg

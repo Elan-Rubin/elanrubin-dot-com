@@ -307,7 +307,7 @@ function addTerminalCommand(command) {
 
   const prompt = document.createElement("span");
   prompt.className = "terminal-prompt";
-  prompt.textContent = "> ";
+  prompt.textContent = "C:\\Users\\Elan> ";
 
   const commandText = document.createElement("span");
   commandText.className = "terminal-command-text";
@@ -351,5 +351,14 @@ setInterval(updateTime, 1000);
 document.addEventListener("DOMContentLoaded", function () {
   updateTime();
   updateTerminalList();
+
+  // Setup desktop icon click handlers
+  const desktopIcons = document.querySelectorAll(".desktop-icon");
+  desktopIcons.forEach((icon) => {
+    icon.addEventListener("click", function () {
+      const windowName = this.getAttribute("data-window");
+      toggleWindow(windowName);
+    });
+  });
 });
 //sometiemes this doesnt work
