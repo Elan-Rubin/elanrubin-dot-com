@@ -509,12 +509,40 @@ html {
   padding: 0.5rem;
   /* font-family: 'Courier New', monospace; */
   text-transform: lowercase;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .terminal-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 0.5rem 0;
+}
+
+.terminal-commands {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: "Courier New", monospace;
+  font-size: 0.75rem;
+  max-height: 4rem;
+  overflow-y: auto;
+}
+
+.terminal-command-line {
+  color: var(--color-light-green);
+  margin-bottom: 0.25rem;
+  display: flex;
+}
+
+.terminal-prompt {
+  color: var(--color-green);
+  margin-right: 0.25rem;
+}
+
+.terminal-command-text {
+  color: var(--color-light-green);
 }
 
 .terminal-item {

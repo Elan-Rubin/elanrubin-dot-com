@@ -235,11 +235,13 @@ function toggleWindow(windowName) {
     if (windowStates[windowName]) {
       windowElement.style.display = "block";
       windowElement.style.animation = "openWindow 0.3s";
+      addTerminalCommand(`launch ${windowName.toLowerCase()}.exe`);
     } else {
       windowElement.style.animation = "closeWindow 0.3s";
       setTimeout(() => {
         windowElement.style.display = "none";
       }, 280);
+      addTerminalCommand(`kill ${windowName.toLowerCase()}.exe`);
     }
     updateTerminalList();
   }
@@ -293,6 +295,46 @@ function updateTerminalList() {
       toggleWindow(windowName);
     });
   });
+}
+
+// Terminal command display with typing animation
+function addTerminalCommand(command) {
+  const terminalCommands = document.getElementById("terminalCommands");
+  if (!terminalCommands) return;
+
+  const commandLine = document.createElement("div");
+  commandLine.className = "terminal-command-line";
+
+  const prompt = document.createElement("span");
+  prompt.className = "terminal-prompt";
+  prompt.textContent = "> ";
+
+  const commandText = document.createElement("span");
+  commandText.className = "terminal-command-text";
+
+  commandLine.appendChild(prompt);
+  commandLine.appendChild(commandText);
+  terminalCommands.appendChild(commandLine);
+
+  // Typing animation
+  let i = 0;
+  function typeChar() {
+    if (i < command.length) {
+      commandText.textContent += command.charAt(i);
+      i++;
+      setTimeout(typeChar, 30);
+    }
+  }
+  typeChar();
+
+  // Keep only last 3 commands
+  const allCommands = terminalCommands.querySelectorAll(".terminal-command-line");
+  if (allCommands.length > 3) {
+    terminalCommands.removeChild(allCommands[0]);
+  }
+
+  // Auto-scroll to bottom
+  terminalCommands.scrollTop = terminalCommands.scrollHeight;
 }
 
 // Initialize terminal when DOM is loaded
