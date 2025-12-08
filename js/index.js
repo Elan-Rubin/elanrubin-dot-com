@@ -291,7 +291,7 @@ function updateTerminalList() {
             }"></span>
             ${name}
         </li>
-    `
+    `,
     )
     .join("");
 
