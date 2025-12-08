@@ -555,3 +555,31 @@ html {
   gap: 2rem;
   grid-auto-flow: column;
 }
+
+/* Selection box styling */
+#selectionBox {
+  position: absolute;
+  border: 1px solid rgba(0, 120, 215, 0.8);
+  background-color: rgba(0, 120, 215, 0.3);
+  pointer-events: none;
+  display: none;
+  z-index: 9999;
+}
+
+/* Notification dot for app icons */
+.app-icon.has-notification::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: #ff0000;
+  border-radius: 50%;
+  border: 2px solid var(--color-off-white);
+  z-index: 1;
+}
+
+.app-icon {
+  position: relative;
+}

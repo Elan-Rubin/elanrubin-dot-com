@@ -453,3 +453,63 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 //sometiemes this doesnt work
+
+// Desktop selection box functionality
+document.addEventListener("DOMContentLoaded", function () {
+  const desktopSection = document.getElementById("desktopSection");
+  const selectionBox = document.getElementById("selectionBox");
+  let isSelecting = false;
+  let startX = 0;
+  let startY = 0;
+
+  desktopSection.addEventListener("mousedown", function (e) {
+    // Only start selection if clicking directly on the desktop (not on windows or icons)
+    if (e.target !== desktopSection && !e.target.closest("#desktopSection")) {
+      return;
+    }
+
+    // Prevent selection if clicking on any interactive elements
+    if (
+      e.target.closest(".window") ||
+      e.target.closest(".app-icon") ||
+      e.target.closest(".desktop-icon") ||
+      e.target.closest("#taskBar")
+    ) {
+      return;
+    }
+
+    isSelecting = true;
+    startX = e.pageX;
+    startY = e.pageY;
+
+    selectionBox.style.left = startX + "px";
+    selectionBox.style.top = startY + "px";
+    selectionBox.style.width = "0px";
+    selectionBox.style.height = "0px";
+    selectionBox.style.display = "block";
+
+    e.preventDefault();
+  });
+
+  document.addEventListener("mousemove", function (e) {
+    if (!isSelecting) return;
+
+    const currentX = e.pageX;
+    const currentY = e.pageY;
+
+    const width = Math.abs(currentX - startX);
+    const height = Math.abs(currentY - startY);
+
+    selectionBox.style.width = width + "px";
+    selectionBox.style.height = height + "px";
+    selectionBox.style.left = Math.min(currentX, startX) + "px";
+    selectionBox.style.top = Math.min(currentY, startY) + "px";
+  });
+
+  document.addEventListener("mouseup", function () {
+    if (isSelecting) {
+      isSelecting = false;
+      selectionBox.style.display = "none";
+    }
+  });
+});
