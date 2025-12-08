@@ -110,10 +110,8 @@
         <a
           href="#"
           class="app-icon resume-link"
-          target="_blank"
         >
           <i class="fa-solid fa-file" style="background-color: #e20001"></i>
-          <!-- <i class="fas fa-file-pdf" style="background-color: var(--color-blue);"></i> -->
           <span>Resume</span>
         </a>
         <a
@@ -445,6 +443,32 @@
       <script src="/js/musicplayer.js"></script>
       <!-- is this supposed to be here ^^ -->
       <!-- lol i guess cause it works -->
+
+      <div
+        class="window resume-window"
+        style="
+          top: 3rem;
+          left: calc(50vw - 25rem);
+          width: 50rem;
+          height: 40rem;
+          display: none;
+        "
+      >
+        <div class="window-header">
+          <div class="window-title">Resume</div>
+          <div class="window-controls">
+            <button class="window-button close-btn">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+        <div class="window-content" style="padding: 0; overflow: hidden; height: calc(100% - 2rem); display: flex;">
+          <iframe
+            id="resumeViewer"
+            style="width: 100%; height: 100%; border: none; flex: 1;"
+          ></iframe>
+        </div>
+      </div>
     </section>
     <div id="taskBar">
       <div id="taskBarItems">

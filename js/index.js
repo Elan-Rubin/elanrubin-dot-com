@@ -205,47 +205,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Handle resume link separately
+  // Handle resume link - open Resume window
   const resumeLink = document.querySelector(".resume-link");
   if (resumeLink) {
-    resumeLink.addEventListener("click", async function (e) {
+    resumeLink.addEventListener("click", function (e) {
       e.preventDefault();
-
-      try {
-        // Fetch the directory listing as HTML
-        const response = await fetch("pdf/resume/");
-        const html = await response.text();
-
-        // Parse HTML to find PDF files
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-        const links = doc.querySelectorAll("a");
-
-        // Find first PDF file
-        let pdfPath = null;
-        for (const link of links) {
-          const href = link.getAttribute("href");
-          if (href && href.toLowerCase().endsWith(".pdf")) {
-            pdfPath = href;
-            break;
-          }
-        }
-
-        if (pdfPath) {
-          // Decode the URL-encoded path and extract just the filename
-          const decodedPath = decodeURIComponent(pdfPath);
-          // Get the filename from the path (handles both / and \ separators)
-          const filename = decodedPath.split(/[/\\]/).pop();
-          const resumePath = `pdf/resume/${filename}`;
-          window.open(resumePath, "_blank");
-          addTerminalCommand("visit resume");
-        } else {
-          console.error("No PDF found in resume folder");
-          addTerminalCommand("error: resume not found");
-        }
-      } catch (error) {
-        console.error("Error loading resume:", error);
-        addTerminalCommand("error: failed to load resume");
+      // Toggle the Resume window (will load PDF on first open)
+      if (!windowStates["Resume"]) {
+        toggleWindow("Resume");
       }
     });
   }
@@ -277,16 +244,63 @@ let windowStates = {
   Notepad: true,
   Playlist: true,
   Clicker: false,
+  Resume: false,
 };
 
-function toggleWindow(windowName) {
+// Load the resume PDF into the iframe
+async function loadResumePDF() {
+  const resumeViewer = document.getElementById("resumeViewer");
+  if (!resumeViewer || resumeViewer.src) return; // Already loaded
+
+  try {
+    // Fetch the directory listing as HTML
+    const response = await fetch("pdf/resume/");
+    const html = await response.text();
+
+    // Parse HTML to find PDF files
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const links = doc.querySelectorAll("a");
+
+    // Find first PDF file
+    let pdfPath = null;
+    for (const link of links) {
+      const href = link.getAttribute("href");
+      if (href && href.toLowerCase().endsWith(".pdf")) {
+        pdfPath = href;
+        break;
+      }
+    }
+
+    if (pdfPath) {
+      // Decode the URL-encoded path and extract just the filename
+      const decodedPath = decodeURIComponent(pdfPath);
+      // Get the filename from the path (handles both / and \ separators)
+      const filename = decodedPath.split(/[/\\]/).pop();
+      const resumePath = `pdf/resume/${filename}`;
+      resumeViewer.src = resumePath;
+    } else {
+      console.error("No PDF found in resume folder");
+    }
+  } catch (error) {
+    console.error("Error loading resume:", error);
+  }
+}
+
+async function toggleWindow(windowName) {
   const windowElement = findWindowByTitle(windowName);
   if (windowElement) {
     windowStates[windowName] = !windowStates[windowName];
     if (windowStates[windowName]) {
       windowElement.style.display = "block";
       windowElement.style.animation = "openWindow 0.3s";
+      windowElement.style.zIndex = ++zIndex; // Bring to front
       addTerminalCommand(`launch ${windowName.toLowerCase()}.exe`);
+
+      // Load PDF if this is the Resume window
+      if (windowName === "Resume") {
+        await loadResumePDF();
+      }
     } else {
       windowElement.style.animation = "closeWindow 0.3s";
       setTimeout(() => {
