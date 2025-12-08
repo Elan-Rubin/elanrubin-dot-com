@@ -193,10 +193,13 @@ document.addEventListener("DOMContentLoaded", function () {
       // Only handle if there's an href attribute (skip desktop icons)
       if (url) {
         e.preventDefault();
-        if (url.startsWith("mailto:")) {
-          window.location.href = url;
-        } else {
-          window.open(url, "_blank");
+
+        // Get the name of the link from the span text
+        const linkName = this.querySelector("span")?.textContent.toLowerCase();
+
+        window.open(url, "_blank");
+        if (linkName) {
+          addTerminalCommand(`visit ${linkName}`);
         }
       }
     });
@@ -283,10 +286,12 @@ function updateTerminalList() {
     .map(
       (name) => `
         <li class="terminal-item">
-            <span class="status-dot ${windowStates[name] ? "active" : ""}"></span>
+            <span class="status-dot ${
+              windowStates[name] ? "active" : ""
+            }"></span>
             ${name}
         </li>
-    `,
+    `
     )
     .join("");
 
