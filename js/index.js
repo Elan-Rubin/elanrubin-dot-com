@@ -189,12 +189,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const appIcons = document.querySelectorAll(".app-icon");
   appIcons.forEach((icon) => {
     icon.addEventListener("click", function (e) {
-      e.preventDefault();
       const url = this.getAttribute("href");
-      if (url.startsWith("mailto:")) {
-        window.location.href = url;
-      } else {
-        window.open(url, "_blank");
+      // Only handle if there's an href attribute (skip desktop icons)
+      if (url) {
+        e.preventDefault();
+        if (url.startsWith("mailto:")) {
+          window.location.href = url;
+        } else {
+          window.open(url, "_blank");
+        }
       }
     });
   });
@@ -302,41 +305,35 @@ function addTerminalCommand(command) {
   const terminalCommands = document.getElementById("terminalCommands");
   if (!terminalCommands) return;
 
-  const commandLine = document.createElement("div");
-  commandLine.className = "terminal-command-line";
-
-  const prompt = document.createElement("span");
-  prompt.className = "terminal-prompt";
-  prompt.textContent = "C:\\Users\\Elan> ";
-
-  const commandText = document.createElement("span");
-  commandText.className = "terminal-command-text";
-
-  commandLine.appendChild(prompt);
-  commandLine.appendChild(commandText);
-  terminalCommands.appendChild(commandLine);
+  // Get the current active line (the last one with just the prompt)
+  const currentLine = terminalCommands.lastChild;
+  const promptText = "C:\\Users\\Elan> ";
 
   // Typing animation
   let i = 0;
   function typeChar() {
     if (i < command.length) {
-      commandText.textContent += command.charAt(i);
+      currentLine.textContent = promptText + command.substring(0, i + 1);
       i++;
       setTimeout(typeChar, 30);
+    } else {
+      // After typing is complete, add a new empty prompt line
+      const newCommandLine = document.createElement("div");
+      newCommandLine.className = "terminal-line";
+      newCommandLine.textContent = promptText;
+      terminalCommands.appendChild(newCommandLine);
+
+      // Keep only last 4 lines (3 completed + 1 empty prompt)
+      const allChildren = Array.from(terminalCommands.children);
+      if (allChildren.length > 4) {
+        terminalCommands.removeChild(allChildren[0]);
+      }
+
+      // Auto-scroll to bottom
+      terminalCommands.scrollTop = terminalCommands.scrollHeight;
     }
   }
   typeChar();
-
-  // Keep only last 3 commands
-  const allCommands = terminalCommands.querySelectorAll(
-    ".terminal-command-line",
-  );
-  if (allCommands.length > 3) {
-    terminalCommands.removeChild(allCommands[0]);
-  }
-
-  // Auto-scroll to bottom
-  terminalCommands.scrollTop = terminalCommands.scrollHeight;
 }
 
 // Initialize terminal when DOM is loaded
@@ -351,6 +348,27 @@ setInterval(updateTime, 1000);
 document.addEventListener("DOMContentLoaded", function () {
   updateTime();
   updateTerminalList();
+
+  // Initialize terminal with welcome message and first prompt
+  const terminalCommands = document.getElementById("terminalCommands");
+  if (terminalCommands) {
+    // Add welcome message
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const timeString = `${hours}:${minutes}`;
+
+    const welcomeLine = document.createElement("div");
+    welcomeLine.className = "terminal-line";
+    welcomeLine.textContent = `connected at ${timeString}`;
+    terminalCommands.appendChild(welcomeLine);
+
+    // Add first empty prompt
+    const commandLine = document.createElement("div");
+    commandLine.className = "terminal-line";
+    commandLine.textContent = "C:\\Users\\Elan> ";
+    terminalCommands.appendChild(commandLine);
+  }
 
   // Setup desktop icon click handlers
   const desktopIcons = document.querySelectorAll(".desktop-icon");
