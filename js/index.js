@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
     icon.addEventListener("click", function (e) {
       const url = this.getAttribute("href");
       // Only handle if there's an href attribute (skip desktop icons)
-      if (url) {
+      if (url && url !== "#") {
         e.preventDefault();
 
         // Get the name of the link from the span text
@@ -204,6 +204,51 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+
+  // Handle resume link separately
+  const resumeLink = document.querySelector(".resume-link");
+  if (resumeLink) {
+    resumeLink.addEventListener("click", async function (e) {
+      e.preventDefault();
+
+      try {
+        // Fetch the directory listing as HTML
+        const response = await fetch("pdf/resume/");
+        const html = await response.text();
+
+        // Parse HTML to find PDF files
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const links = doc.querySelectorAll("a");
+
+        // Find first PDF file
+        let pdfPath = null;
+        for (const link of links) {
+          const href = link.getAttribute("href");
+          if (href && href.toLowerCase().endsWith(".pdf")) {
+            pdfPath = href;
+            break;
+          }
+        }
+
+        if (pdfPath) {
+          // Decode the URL-encoded path and extract just the filename
+          const decodedPath = decodeURIComponent(pdfPath);
+          // Get the filename from the path (handles both / and \ separators)
+          const filename = decodedPath.split(/[/\\]/).pop();
+          const resumePath = `pdf/resume/${filename}`;
+          window.open(resumePath, "_blank");
+          addTerminalCommand("visit resume");
+        } else {
+          console.error("No PDF found in resume folder");
+          addTerminalCommand("error: resume not found");
+        }
+      } catch (error) {
+        console.error("Error loading resume:", error);
+        addTerminalCommand("error: failed to load resume");
+      }
+    });
+  }
 });
 
 //update the time and volume
@@ -361,7 +406,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, "0");
     const minutes = now.getMinutes().toString().padStart(2, "0");
-    const timeString = `${hours}:${minutes}`;
+    const timeString = `${hours}:${minutes}:${now.getSeconds().toString().padStart(2, "0")}`;
 
     const welcomeLine = document.createElement("div");
     welcomeLine.className = "terminal-line";
