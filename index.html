@@ -466,12 +466,26 @@
             overflow: hidden;
             height: calc(100% - 2rem);
             display: flex;
+            flex-direction: column;
           "
         >
-          <iframe
+          <object
             id="resumeViewer"
+            type="application/pdf"
             style="width: 100%; height: 100%; border: none; flex: 1"
-          ></iframe>
+          >
+            <div style="padding: 2rem; text-align: center">
+              <p style="margin-bottom: 1rem">PDF viewer not available.</p>
+              <a
+                id="resumeDownloadLink"
+                href="#"
+                style="color: var(--color-light-green); text-decoration: underline"
+                download
+              >
+                Click here to download the resume
+              </a>
+            </div>
+          </object>
         </div>
       </div>
     </section>

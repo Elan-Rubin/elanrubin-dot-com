@@ -247,10 +247,11 @@ let windowStates = {
   Resume: false,
 };
 
-// Load the resume PDF into the iframe
+// Load the resume PDF into the object viewer
 async function loadResumePDF() {
   const resumeViewer = document.getElementById("resumeViewer");
-  if (!resumeViewer || resumeViewer.src) return; // Already loaded
+  const downloadLink = document.getElementById("resumeDownloadLink");
+  if (!resumeViewer || resumeViewer.data) return; // Already loaded
 
   try {
     // Fetch the directory listing as HTML
@@ -278,7 +279,15 @@ async function loadResumePDF() {
       // Get the filename from the path (handles both / and \ separators)
       const filename = decodedPath.split(/[/\\]/).pop();
       const resumePath = `pdf/resume/${filename}`;
-      resumeViewer.src = resumePath;
+
+      // Set the object data attribute to load the PDF
+      resumeViewer.data = resumePath;
+
+      // Set the download link href
+      if (downloadLink) {
+        downloadLink.href = resumePath;
+        downloadLink.download = filename;
+      }
     } else {
       console.error("No PDF found in resume folder");
     }
