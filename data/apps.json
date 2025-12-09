@@ -1,0 +1,120 @@
+[
+  {
+    "id": "slideshow",
+    "icon": "fa-solid fa-images",
+    "iconBg": "#ff6b6b",
+    "label": "Slideshow",
+    "type": "desktop",
+    "window": "Slideshow",
+    "gridX": 0,
+    "gridY": 0
+  },
+  {
+    "id": "calculator",
+    "icon": "fa-solid fa-calculator",
+    "iconBg": "#4ecdc4",
+    "label": "Calculator",
+    "type": "desktop",
+    "window": "Calculator",
+    "gridX": 1,
+    "gridY": 0
+  },
+  {
+    "id": "notepad",
+    "icon": "fa-solid fa-note-sticky",
+    "iconBg": "#ffe66d",
+    "label": "Notepad",
+    "type": "desktop",
+    "window": "Notepad",
+    "gridX": 2,
+    "gridY": 0
+  },
+  {
+    "id": "playlist",
+    "icon": "fa-solid fa-music",
+    "iconBg": "#a8e6cf",
+    "label": "Playlist",
+    "type": "desktop",
+    "window": "Playlist",
+    "gridX": 3,
+    "gridY": 0
+  },
+  {
+    "id": "clicker",
+    "icon": "fa-solid fa-cookie-bite",
+    "iconBg": "#ffd3b6",
+    "label": "Clicker",
+    "type": "desktop",
+    "window": "Clicker",
+    "gridX": 4,
+    "gridY": 0
+  },
+  {
+    "id": "linkedin",
+    "icon": "fab fa-linkedin",
+    "iconBg": "#0a66c2",
+    "label": "LinkedIn",
+    "type": "link",
+    "url": "https://www.linkedin.com/in/elan-rubin/",
+    "gridX": 0,
+    "gridY": 1
+  },
+  {
+    "id": "github",
+    "icon": "fab fa-github",
+    "iconBg": "#181717",
+    "label": "GitHub",
+    "type": "link",
+    "url": "https://github.com/Elan-Rubin",
+    "gridX": 1,
+    "gridY": 1
+  },
+  {
+    "id": "resume",
+    "icon": "fa-solid fa-file",
+    "iconBg": "#e20001",
+    "label": "Resume",
+    "type": "resume",
+    "gridX": 2,
+    "gridY": 1
+  },
+  {
+    "id": "email",
+    "icon": "fas fa-envelope",
+    "iconBg": "#9ecbff",
+    "label": "Email",
+    "type": "email",
+    "gridX": 3,
+    "gridY": 1
+  },
+  {
+    "id": "itch",
+    "icon": "fa-brands fa-itch-io",
+    "iconBg": "#fa5c5c",
+    "label": "itch.io",
+    "type": "link",
+    "url": "https://elanmakesgames.itch.io/",
+    "gridX": 4,
+    "gridY": 1
+  },
+  {
+    "id": "etsy",
+    "icon": "fab fa-etsy",
+    "iconBg": "#f16521",
+    "label": "Etsy",
+    "type": "link",
+    "url": "https://www.etsy.com/shop/Legoco",
+    "gridX": 5,
+    "gridY": 1
+  },
+  {
+    "id": "instagram",
+    "icon": "fab fa-instagram",
+    "iconBg": "linear-gradient(45deg, #fec408, #f58529, #dd2a7b, #8134af)",
+    "label": "Instagram",
+    "type": "link",
+    "url": "https://www.instagram.com/elan_rubin/",
+    "gridX": 6,
+    "gridY": 1
+  }
+]

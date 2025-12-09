@@ -1,0 +1,79 @@
+[
+  {
+    "id": "terminal",
+    "title": "Terminal",
+    "position": {
+      "top": "24.5rem",
+      "left": "0rem"
+    },
+    "isOpen": true,
+    "isFixed": true,
+    "showControls": false
+  },
+  {
+    "id": "slideshow",
+    "title": "Slideshow",
+    "position": {
+      "top": "1rem",
+      "left": "1rem"
+    },
+    "isOpen": false,
+    "isFixed": false,
+    "showControls": true
+  },
+  {
+    "id": "calculator",
+    "title": "Calculator",
+    "position": {
+      "top": "20rem",
+      "left": "50rem"
+    },
+    "isOpen": false,
+    "isFixed": false,
+    "showControls": true
+  },
+  {
+    "id": "notepad",
+    "title": "Notepad",
+    "position": {
+      "top": "2.5rem",
+      "left": "22rem"
+    },
+    "isOpen": true,
+    "isFixed": false,
+    "showControls": true
+  },
+  {
+    "id": "clicker",
+    "title": "Clicker",
+    "position": {
+      "top": "15rem",
+      "left": "30rem"
+    },
+    "isOpen": false,
+    "isFixed": false,
+    "showControls": true
+  },
+  {
+    "id": "playlist",
+    "title": "Playlist",
+    "position": {
+      "top": "25rem",
+      "left": "60rem"
+    },
+    "isOpen": false,
+    "isFixed": false,
+    "showControls": true
+  },
+  {
+    "id": "resume",
+    "title": "Resume",
+    "position": {
+      "top": "3rem",
+      "left": "25rem"
+    },
+    "isOpen": false,
+    "isFixed": false,
+    "showControls": true
+  }
+]

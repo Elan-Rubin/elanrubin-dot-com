@@ -183,39 +183,443 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-//app icon code
+//app icon code - data-driven grid system
 
-document.addEventListener("DOMContentLoaded", function () {
-  const appIcons = document.querySelectorAll(".app-icon");
-  appIcons.forEach((icon) => {
-    icon.addEventListener("click", function (e) {
-      const url = this.getAttribute("href");
-      // Only handle if there's an href attribute (skip desktop icons)
-      if (url && url !== "#") {
-        e.preventDefault();
+// Grid configuration - square cells matching app icon size
+const GRID_CONFIG = {
+  cellWidth: 6, // rem - matches .app-icon width
+  cellHeight: 6, // rem - square cells (app icon is 4rem, centered in 6rem)
+  cols: 0, // will be calculated
+  rows: 0, // will be calculated
+};
 
-        // Get the name of the link from the span text
-        const linkName = this.querySelector("span")?.textContent.toLowerCase();
+// App data - will be loaded from JSON
+let APP_DATA = [];
 
-        window.open(url, "_blank");
-        if (linkName) {
-          addTerminalCommand(`visit ${linkName}`);
+// Window data - will be loaded from JSON
+let WINDOW_DATA = [];
+
+let draggedApp = null;
+let dragStartX = 0;
+let dragStartY = 0;
+let isDraggingApp = false;
+
+// Load app data from JSON
+async function loadAppData() {
+  try {
+    const response = await fetch("/data/apps.json");
+    APP_DATA = await response.json();
+    return APP_DATA;
+  } catch (error) {
+    console.error("Error loading app data:", error);
+    return [];
+  }
+}
+
+// Load window data from JSON
+async function loadWindowData() {
+  try {
+    const response = await fetch("/data/windows.json");
+    WINDOW_DATA = await response.json();
+    return WINDOW_DATA;
+  } catch (error) {
+    console.error("Error loading window data:", error);
+    return [];
+  }
+}
+
+function calculateGridDimensions() {
+  const container = document.getElementById("appIconsContainer");
+  const rect = container.getBoundingClientRect();
+  const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+
+  // Account for 1rem padding on all sides (2rem total width/height)
+  const paddingTotal = 2 * remSize;
+  const usableWidth = rect.width - paddingTotal;
+  const usableHeight = rect.height - paddingTotal;
+
+  GRID_CONFIG.cols = Math.floor(usableWidth / (GRID_CONFIG.cellWidth * remSize));
+  GRID_CONFIG.rows = Math.floor(usableHeight / (GRID_CONFIG.cellHeight * remSize));
+}
+
+function gridToPixels(gridX, gridY) {
+  const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const container = document.getElementById("appIconsContainer");
+  const rect = container.getBoundingClientRect();
+
+  // Account for 1rem padding on all sides
+  const paddingTotal = 2 * remSize;
+  const usableHeight = rect.height - paddingTotal;
+
+  // Bottom-left origin: (0,0) is at bottom-left corner
+  // Y increases upward, so we need to flip it for screen coordinates
+  // Icon (4rem) is centered in 6rem cell, so icon top is at cell_bottom + 1rem (padding) + icon_half (2rem)
+  // Icon top in grid coords: gridY * 6rem + 3rem + 2rem = gridY * 6rem + 5rem from bottom
+  // Convert to screen coords: containerHeight - (gridY * 6rem + 5rem)
+  return {
+    x: gridX * GRID_CONFIG.cellWidth * remSize,
+    y: usableHeight - gridY * GRID_CONFIG.cellHeight * remSize - 5 * remSize,
+  };
+}
+
+function pixelsToGrid(x, y) {
+  const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const container = document.getElementById("appIconsContainer");
+  const containerRect = container.getBoundingClientRect();
+
+  // Account for 1rem padding on all sides
+  const paddingTotal = 2 * remSize;
+  const usableHeight = containerRect.height - paddingTotal;
+
+  // Convert screen Y to bottom-left origin (Y increases upward from bottom)
+  const flippedY = usableHeight - y;
+
+  return {
+    gridX: Math.floor(x / (GRID_CONFIG.cellWidth * remSize)),
+    gridY: Math.floor(flippedY / (GRID_CONFIG.cellHeight * remSize)),
+  };
+}
+
+function isGridOccupied(gridX, gridY, excludeAppId) {
+  return APP_DATA.some(
+    (app) => app.id !== excludeAppId && app.gridX === gridX && app.gridY === gridY,
+  );
+}
+
+function renderGrid(showAvailability = false) {
+  const grid = document.getElementById("desktopGrid");
+  const container = document.getElementById("appIconsContainer");
+  const rect = container.getBoundingClientRect();
+  const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const cellWidth = GRID_CONFIG.cellWidth * remSize;
+  const cellHeight = GRID_CONFIG.cellHeight * remSize;
+
+  // Account for 1rem padding on all sides
+  const paddingTotal = 2 * remSize;
+  const usableWidth = rect.width - paddingTotal;
+  const usableHeight = rect.height - paddingTotal;
+
+  // Create SVG grid
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("width", "100%");
+  svg.setAttribute("height", "100%");
+  svg.setAttribute("viewBox", `0 0 ${rect.width} ${rect.height}`);
+
+  // Draw vertical grid lines (left to right)
+  for (let x = 0; x <= GRID_CONFIG.cols; x++) {
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", x * cellWidth);
+    line.setAttribute("y1", 0);
+    line.setAttribute("x2", x * cellWidth);
+    line.setAttribute("y2", usableHeight);
+    line.setAttribute("stroke", "rgba(255, 255, 255, 0.2)");
+    line.setAttribute("stroke-width", "1");
+    svg.appendChild(line);
+  }
+
+  // Draw horizontal grid lines (bottom to top, aligned with grid cells)
+  for (let y = 0; y <= GRID_CONFIG.rows; y++) {
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", 0);
+    line.setAttribute("y1", usableHeight - y * cellHeight);
+    line.setAttribute("x2", usableWidth);
+    line.setAttribute("y2", usableHeight - y * cellHeight);
+    line.setAttribute("stroke", "rgba(255, 255, 255, 0.2)");
+    line.setAttribute("stroke-width", "1");
+    svg.appendChild(line);
+  }
+
+  // Show availability indicators when dragging
+  if (showAvailability) {
+    const excludeId = draggedApp ? draggedApp.dataset.appId : null;
+
+    for (let y = 0; y < GRID_CONFIG.rows; y++) {
+      for (let x = 0; x < GRID_CONFIG.cols; x++) {
+        const isOccupied = isGridOccupied(x, y, excludeId);
+
+        // Position dot/X at the center of where the icon will be
+        // Icon (4rem) is centered in 6rem cell
+        // Icon center in grid coords (bottom-left origin): x * 6rem + 3rem, y * 6rem + 3rem
+        // Convert to screen coords (top-left origin):
+        const centerX = x * cellWidth + cellWidth / 2;
+        const centerY = usableHeight - (y * cellHeight + cellHeight / 2);
+
+        if (isOccupied) {
+          // Draw X for occupied cells
+          const size = 8;
+          const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          line1.setAttribute("x1", centerX - size);
+          line1.setAttribute("y1", centerY - size);
+          line1.setAttribute("x2", centerX + size);
+          line1.setAttribute("y2", centerY + size);
+          line1.setAttribute("stroke", "rgba(255, 100, 100, 0.6)");
+          line1.setAttribute("stroke-width", "2");
+          svg.appendChild(line1);
+
+          const line2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          line2.setAttribute("x1", centerX + size);
+          line2.setAttribute("y1", centerY - size);
+          line2.setAttribute("x2", centerX - size);
+          line2.setAttribute("y2", centerY + size);
+          line2.setAttribute("stroke", "rgba(255, 100, 100, 0.6)");
+          line2.setAttribute("stroke-width", "2");
+          svg.appendChild(line2);
+        } else {
+          // Draw dot for available cells
+          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          circle.setAttribute("cx", centerX);
+          circle.setAttribute("cy", centerY);
+          circle.setAttribute("r", "4");
+          circle.setAttribute("fill", "rgba(255, 255, 255, 0.5)");
+          svg.appendChild(circle);
         }
       }
-    });
+    }
+  }
+
+  grid.innerHTML = "";
+  grid.appendChild(svg);
+}
+
+function renderApps() {
+  const container = document.getElementById("appIconsContainer");
+  container.innerHTML = "";
+
+  APP_DATA.forEach((appData) => {
+    const appElement = createAppElement(appData);
+    container.appendChild(appElement);
+    positionApp(appElement, appData);
+  });
+}
+
+function createAppElement(appData) {
+  const appDiv = document.createElement(appData.type === "link" ? "a" : "div");
+  appDiv.className = "app-icon";
+  appDiv.id = `app-${appData.id}`;
+  appDiv.dataset.appId = appData.id;
+
+  if (appData.type === "link") {
+    appDiv.href = appData.url;
+    appDiv.target = "_blank";
+  }
+
+  const icon = document.createElement("i");
+  icon.className = appData.icon;
+  icon.style.background = appData.iconBg;
+
+  const label = document.createElement("span");
+  label.textContent = appData.label;
+
+  appDiv.appendChild(icon);
+  appDiv.appendChild(label);
+
+  // Add event listeners
+  setupAppEventListeners(appDiv, appData);
+
+  return appDiv;
+}
+
+function setupAppEventListeners(appElement, appData) {
+  let wasJustDragging = false;
+
+  appElement.addEventListener("mousedown", function (e) {
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    draggedApp = appElement;
+    wasJustDragging = false;
+
+    // For links, prevent default immediately to avoid navigation
+    if (appData.type === "link") {
+      e.preventDefault();
+    }
+
+    // Start long press timer
+    appElement._longPressTimer = setTimeout(() => {
+      startDragging(appElement, e);
+      wasJustDragging = true;
+    }, 300);
   });
 
-  // Handle resume link - open Resume window
-  const resumeLink = document.querySelector(".resume-link");
-  if (resumeLink) {
-    resumeLink.addEventListener("click", function (e) {
+  appElement.addEventListener("click", function (e) {
+    // Prevent default for links (handle manually)
+    if (appData.type === "link") {
       e.preventDefault();
-      // Toggle the Resume window (will load PDF on first open)
-      if (!windowStates["Resume"]) {
-        toggleWindow("Resume");
+    }
+
+    // Only handle click if we're not dragging and didn't just finish dragging
+    if (!isDraggingApp && !wasJustDragging) {
+      handleAppClick(appElement, appData, e);
+    }
+
+    // Reset flag after a short delay
+    setTimeout(() => {
+      wasJustDragging = false;
+    }, 100);
+  });
+}
+
+function startDragging(appElement, e) {
+  isDraggingApp = true;
+  draggedApp = appElement;
+  appElement.classList.add("dragging");
+  document.getElementById("desktopGrid").classList.add("visible");
+  // Re-render grid with availability indicators
+  renderGrid(true);
+  e.preventDefault();
+}
+
+function stopDragging(appElement, appData) {
+  const rect = appElement.getBoundingClientRect();
+  const container = document.getElementById("appIconsContainer");
+  const containerRect = container.getBoundingClientRect();
+
+  // Get center position relative to container
+  const centerX = rect.left - containerRect.left + rect.width / 2;
+  const centerY = rect.top - containerRect.top + rect.height / 2;
+
+  let { gridX, gridY } = pixelsToGrid(centerX, centerY);
+
+  // Find nearest unoccupied cell
+  let attempts = 0;
+  while (isGridOccupied(gridX, gridY, appData.id) && attempts < 100) {
+    // Try adjacent cells
+    const offsets = [
+      [0, -1],
+      [1, 0],
+      [0, 1],
+      [-1, 0],
+      [-1, -1],
+      [1, -1],
+      [1, 1],
+      [-1, 1],
+    ];
+    let found = false;
+    for (const [dx, dy] of offsets) {
+      const newX = gridX + dx;
+      const newY = gridY + dy;
+      if (
+        newX >= 0 &&
+        newX < GRID_CONFIG.cols &&
+        newY >= 0 &&
+        newY < GRID_CONFIG.rows &&
+        !isGridOccupied(newX, newY, appData.id)
+      ) {
+        gridX = newX;
+        gridY = newY;
+        found = true;
+        break;
       }
-    });
+    }
+    if (!found) break;
+    attempts++;
   }
+
+  // Update app data
+  appData.gridX = gridX;
+  appData.gridY = gridY;
+
+  // Snap to grid
+  positionApp(appElement, appData);
+
+  appElement.classList.remove("dragging");
+  document.getElementById("desktopGrid").classList.remove("visible");
+  // Reset grid to normal (without availability indicators)
+  renderGrid(false);
+  isDraggingApp = false;
+  draggedApp = null;
+}
+
+function positionApp(appElement, appData) {
+  const pos = gridToPixels(appData.gridX, appData.gridY);
+  appElement.style.left = `${pos.x}px`;
+  appElement.style.top = `${pos.y}px`;
+}
+
+function handleAppClick(appElement, appData, e) {
+  if (appData.type === "link") {
+    e.preventDefault();
+    window.open(appData.url, "_blank");
+    addTerminalCommand(`visit ${appData.label.toLowerCase()}`);
+  } else if (appData.type === "desktop") {
+    toggleWindow(appData.window);
+  } else if (appData.type === "resume") {
+    e.preventDefault();
+    if (!windowStates["Resume"]) {
+      toggleWindow("Resume");
+    }
+  } else if (appData.type === "email") {
+    e.preventDefault();
+    window.open(
+      "mailto:edr53@drexel.edu?subject=Hello%20Elan!&body=I%20love%20your%20website%20and%20am%20interested%20in%20hiring%20you.%0ASincerely%2C%0A%5BYour%20Name%5D",
+    );
+  }
+}
+
+// Global mouse event handlers for dragging
+document.addEventListener("mousemove", function (e) {
+  if (isDraggingApp && draggedApp) {
+    e.preventDefault();
+    const dx = e.clientX - dragStartX;
+    const dy = e.clientY - dragStartY;
+
+    draggedApp.style.left = `${parseFloat(draggedApp.style.left) + dx}px`;
+    draggedApp.style.top = `${parseFloat(draggedApp.style.top) + dy}px`;
+
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+  } else if (draggedApp && !isDraggingApp) {
+    // If mouse moves during long press, cancel it
+    const moveThreshold = 5;
+    if (
+      Math.abs(e.clientX - dragStartX) > moveThreshold ||
+      Math.abs(e.clientY - dragStartY) > moveThreshold
+    ) {
+      if (draggedApp._longPressTimer) {
+        clearTimeout(draggedApp._longPressTimer);
+      }
+    }
+  }
+});
+
+document.addEventListener("mouseup", function (e) {
+  if (draggedApp && draggedApp._longPressTimer) {
+    clearTimeout(draggedApp._longPressTimer);
+  }
+
+  if (isDraggingApp && draggedApp) {
+    // Find the app data
+    const appId = draggedApp.dataset.appId;
+    const appData = APP_DATA.find((app) => app.id === appId);
+    if (appData) {
+      stopDragging(draggedApp, appData);
+    }
+    e.preventDefault();
+    e.stopPropagation();
+  } else {
+    // Reset draggedApp if we're not dragging
+    draggedApp = null;
+  }
+});
+
+// Initialize grid system and windows
+document.addEventListener("DOMContentLoaded", async function () {
+  // Load app data and window data from JSON first
+  await loadAppData();
+  await loadWindowData();
+
+  // Initialize windows with positions and states
+  initializeWindows();
+
+  calculateGridDimensions();
+  renderGrid();
+  renderApps();
+
+  // Recalculate on window resize
+  window.addEventListener("resize", function () {
+    calculateGridDimensions();
+    renderGrid();
+    renderApps();
+  });
 });
 
 //update the time and volume
@@ -237,15 +641,24 @@ function updateTime() {
   }
 }
 
-// Store window states
-let windowStates = {
-  Slideshow: true,
-  Calculator: true,
-  Notepad: true,
-  Playlist: true,
-  Clicker: false,
-  Resume: false,
-};
+// Store window states (will be populated from JSON)
+let windowStates = {};
+
+// Initialize windows from JSON data
+function initializeWindows() {
+  WINDOW_DATA.forEach((windowData) => {
+    const windowElement = findWindowByTitle(windowData.title);
+    if (windowElement) {
+      // Set position
+      windowElement.style.top = windowData.position.top;
+      windowElement.style.left = windowData.position.left;
+
+      // Set initial visibility
+      windowStates[windowData.title] = windowData.isOpen;
+      windowElement.style.display = windowData.isOpen ? "block" : "none";
+    }
+  });
+}
 
 // Load the resume PDF into the object viewer
 async function loadResumePDF() {
@@ -443,14 +856,6 @@ document.addEventListener("DOMContentLoaded", function () {
     terminalCommands.appendChild(commandLine);
   }
 
-  // Setup desktop icon click handlers
-  const desktopIcons = document.querySelectorAll(".desktop-icon");
-  desktopIcons.forEach((icon) => {
-    icon.addEventListener("click", function () {
-      const windowName = this.getAttribute("data-window");
-      toggleWindow(windowName);
-    });
-  });
 });
 //sometiemes this doesnt work
 
