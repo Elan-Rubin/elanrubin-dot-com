@@ -583,7 +583,6 @@ html {
   }
 }
 
-
 /* Selection box styling */
 #selectionBox {
   position: absolute;
@@ -593,4 +592,3 @@ html {
   display: none;
   z-index: 9999;
 }
-

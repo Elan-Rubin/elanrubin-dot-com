@@ -231,19 +231,27 @@ async function loadWindowData() {
 function calculateGridDimensions() {
   const container = document.getElementById("appIconsContainer");
   const rect = container.getBoundingClientRect();
-  const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const remSize = parseFloat(
+    getComputedStyle(document.documentElement).fontSize,
+  );
 
   // Account for 1rem padding on all sides (2rem total width/height)
   const paddingTotal = 2 * remSize;
   const usableWidth = rect.width - paddingTotal;
   const usableHeight = rect.height - paddingTotal;
 
-  GRID_CONFIG.cols = Math.floor(usableWidth / (GRID_CONFIG.cellWidth * remSize));
-  GRID_CONFIG.rows = Math.floor(usableHeight / (GRID_CONFIG.cellHeight * remSize));
+  GRID_CONFIG.cols = Math.floor(
+    usableWidth / (GRID_CONFIG.cellWidth * remSize),
+  );
+  GRID_CONFIG.rows = Math.floor(
+    usableHeight / (GRID_CONFIG.cellHeight * remSize),
+  );
 }
 
 function gridToPixels(gridX, gridY) {
-  const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const remSize = parseFloat(
+    getComputedStyle(document.documentElement).fontSize,
+  );
   const container = document.getElementById("appIconsContainer");
   const rect = container.getBoundingClientRect();
 
@@ -263,7 +271,9 @@ function gridToPixels(gridX, gridY) {
 }
 
 function pixelsToGrid(x, y) {
-  const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const remSize = parseFloat(
+    getComputedStyle(document.documentElement).fontSize,
+  );
   const container = document.getElementById("appIconsContainer");
   const containerRect = container.getBoundingClientRect();
 
@@ -282,7 +292,8 @@ function pixelsToGrid(x, y) {
 
 function isGridOccupied(gridX, gridY, excludeAppId) {
   return APP_DATA.some(
-    (app) => app.id !== excludeAppId && app.gridX === gridX && app.gridY === gridY,
+    (app) =>
+      app.id !== excludeAppId && app.gridX === gridX && app.gridY === gridY,
   );
 }
 
@@ -290,7 +301,9 @@ function renderGrid(showAvailability = false) {
   const grid = document.getElementById("desktopGrid");
   const container = document.getElementById("appIconsContainer");
   const rect = container.getBoundingClientRect();
-  const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const remSize = parseFloat(
+    getComputedStyle(document.documentElement).fontSize,
+  );
   const cellWidth = GRID_CONFIG.cellWidth * remSize;
   const cellHeight = GRID_CONFIG.cellHeight * remSize;
 
@@ -347,7 +360,10 @@ function renderGrid(showAvailability = false) {
         if (isOccupied) {
           // Draw X for occupied cells
           const size = 8;
-          const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          const line1 = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line",
+          );
           line1.setAttribute("x1", centerX - size);
           line1.setAttribute("y1", centerY - size);
           line1.setAttribute("x2", centerX + size);
@@ -356,7 +372,10 @@ function renderGrid(showAvailability = false) {
           line1.setAttribute("stroke-width", "2");
           svg.appendChild(line1);
 
-          const line2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          const line2 = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line",
+          );
           line2.setAttribute("x1", centerX + size);
           line2.setAttribute("y1", centerY - size);
           line2.setAttribute("x2", centerX - size);
@@ -366,7 +385,10 @@ function renderGrid(showAvailability = false) {
           svg.appendChild(line2);
         } else {
           // Draw dot for available cells
-          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          const circle = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle",
+          );
           circle.setAttribute("cx", centerX);
           circle.setAttribute("cy", centerY);
           circle.setAttribute("r", "4");
@@ -855,7 +877,6 @@ document.addEventListener("DOMContentLoaded", function () {
     commandLine.textContent = "C:\\Users\\Elan> ";
     terminalCommands.appendChild(commandLine);
   }
-
 });
 //sometiemes this doesnt work
 
