@@ -132,9 +132,6 @@ html {
 
 .window-content {
   padding: 10px;
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .playlist-window {
@@ -169,13 +166,7 @@ html {
 }
 
 .calculator {
-  /* width: 200px; */
-  /* border: 1px solid #ccc; */
-  /* border-radius: 5px; */
-  /* padding: 10px; */
   margin: 0 auto;
-  /* font-family: Arial, sans-serif; */
-  background-color: #6d7077;
 }
 
 #display {
@@ -239,16 +230,16 @@ html {
 .calc-button::after {
   content: "";
   position: absolute;
-  top: 4%;
-  left: 8%;
-  width: 84%;
+  top: 2px;
+  left: 2px;
+  right: 2px;
   height: 40%;
   background: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 0.8),
     rgba(255, 255, 255, 0.1)
   );
-  border-radius: 0.4rem;
+  border-radius: 0.4rem 0.4rem 0 0;
   transition: background 400ms ease;
   pointer-events: none;
 }
@@ -291,24 +282,6 @@ html {
       rgba(247, 159, 31, 0.95)
     );
 }
-
-.flash {
-  animation: flash 0.5s linear infinite;
-}
-
-/* @keyframes flash {
-    0% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-} */
 
 #desktopSection {
   height: 100vh;
@@ -448,16 +421,16 @@ html {
 .app-icon i::after {
   content: "";
   position: absolute;
-  top: 4%;
-  left: 6%;
-  width: 88%;
-  height: 40%;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  height: 45%;
   background: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 0.7),
     rgba(255, 255, 255, 0.1)
   );
-  border-radius: 1rem;
+  border-radius: 0.9rem 0.9rem 0 0;
   transition: background 400ms ease;
   pointer-events: none;
 }
@@ -648,21 +621,39 @@ html {
 } */
 
 .terminal-content {
-  background-color: var(--color-less-black);
   padding: 0.5rem;
   text-transform: lowercase;
   min-height: 6rem;
+  font-family: "Segoe UI", "Consolas", "Courier New", monospace;
+  color: var(--color-white);
 }
 
 .terminal-commands {
-  font-family: "Courier New", monospace;
-  font-size: 0.75rem;
+  font-family: "Segoe UI", "Consolas", "Courier New", monospace;
+  font-size: 0.875rem;
   overflow-y: auto;
 }
 
 .terminal-line {
-  color: var(--color-light-green);
+  color: var(--color-white);
   margin-bottom: 0.25rem;
+}
+
+/* Blinking cursor for terminal - only show on last line */
+.terminal-line:last-child::after {
+  content: '▋';
+  color: var(--color-white);
+  animation: blink 1s step-end infinite;
+  margin-left: 0.1rem;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  50.01%, 100% {
+    opacity: 0;
+  }
 }
 
 @keyframes closeWindow {
