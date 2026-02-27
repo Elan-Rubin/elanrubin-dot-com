@@ -61,32 +61,26 @@
     <section id="desktopSection">
       <div class="desktop-app-icons">
         <div class="app-icon desktop-icon" data-window="Slideshow">
-          <i class="fa-solid fa-images" style="background-color: #ff6b6b"></i>
+          <img src="/images/ios4 Icons/Photos.png" alt="Slideshow" class="app-icon-img" />
           <span>Slideshow</span>
         </div>
         <div class="app-icon desktop-icon" data-window="Calculator">
-          <i
-            class="fa-solid fa-calculator"
-            style="background-color: #4ecdc4"
-          ></i>
+          <img src="/images/ios4 Icons/Calcualator.png" alt="Calculator" class="app-icon-img" />
           <span>Calculator</span>
         </div>
         <div class="app-icon desktop-icon" data-window="Notepad">
-          <i
-            class="fa-solid fa-note-sticky"
-            style="background-color: #ffe66d"
-          ></i>
+          <img src="/images/ios4 Icons/Notes.png" alt="Notepad" class="app-icon-img" />
           <span>Notepad</span>
         </div>
         <div class="app-icon desktop-icon" data-window="Playlist">
-          <i class="fa-solid fa-music" style="background-color: #a8e6cf"></i>
+          <img src="/images/ios4 Icons/iPod.png" alt="Playlist" class="app-icon-img" />
           <span>Playlist</span>
         </div>
         <div class="app-icon desktop-icon" data-window="Clicker">
-          <i
-            class="fa-solid fa-cookie-bite"
-            style="background-color: #ffd3b6"
-          ></i>
+          <div class="app-icon-composite" style="--blank-tint: rgba(210, 120, 60, 0.55)">
+            <img src="/images/ios4 Icons/Blank.png" alt="" class="app-icon-img" />
+            <i class="fa-solid fa-cookie-bite app-icon-overlay"></i>
+          </div>
           <span>Clicker</span>
         </div>
       </div>
@@ -96,7 +90,10 @@
           class="app-icon"
           target="_blank"
         >
-          <i class="fab fa-linkedin" style="background-color: #0a66c2"></i>
+          <div class="app-icon-composite" style="--blank-tint: rgba(10, 102, 194, 0.6)">
+            <img src="/images/ios4 Icons/Blank.png" alt="" class="app-icon-img" />
+            <i class="fab fa-linkedin app-icon-overlay"></i>
+          </div>
           <span>LinkedIn</span>
         </a>
         <a
@@ -104,12 +101,15 @@
           class="app-icon"
           target="_blank"
         >
-          <i class="fab fa-github" style="background-color: #181717"></i>
+          <div class="app-icon-composite" style="--blank-tint: rgba(30, 30, 30, 0.65)">
+            <img src="/images/ios4 Icons/Blank.png" alt="" class="app-icon-img" />
+            <i class="fab fa-github app-icon-overlay"></i>
+          </div>
           <span>GitHub</span>
         </a>
         <div></div>
         <a href="#" class="app-icon resume-link">
-          <i class="fa-solid fa-file" style="background-color: #e20001"></i>
+          <img src="/images/ios4 Icons/Safari.png" alt="Resume" class="app-icon-img" />
           <span>Resume</span>
         </a>
         <a
@@ -121,7 +121,7 @@
             return false;
           "
         >
-          <i class="fas fa-envelope" style="background-color: #9ecbff"></i>
+          <img src="/images/ios4 Icons/Mail.png" alt="Email" class="app-icon-img" />
           <span>Email</span>
         </a>
         <a
@@ -129,7 +129,10 @@
           class="app-icon"
           target="_blank"
         >
-          <i class="fa-brands fa-itch-io" style="background-color: #fa5c5c"></i>
+          <div class="app-icon-composite" style="--blank-tint: rgba(250, 92, 92, 0.6)">
+            <img src="/images/ios4 Icons/Blank.png" alt="" class="app-icon-img" />
+            <i class="fa-brands fa-itch-io app-icon-overlay"></i>
+          </div>
           <span>itch.io</span>
         </a>
         <div></div>
@@ -138,7 +141,10 @@
           class="app-icon"
           target="_blank"
         >
-          <i class="fab fa-etsy" style="background-color: #f16521"></i>
+          <div class="app-icon-composite" style="--blank-tint: rgba(241, 101, 33, 0.6)">
+            <img src="/images/ios4 Icons/Blank.png" alt="" class="app-icon-img" />
+            <i class="fab fa-etsy app-icon-overlay"></i>
+          </div>
           <span>Etsy</span>
         </a>
         <a
@@ -146,18 +152,7 @@
           class="app-icon"
           target="_blank"
         >
-          <i
-            class="fab fa-instagram"
-            style="
-              background: linear-gradient(
-                45deg,
-                #fec408,
-                #f58529,
-                #dd2a7b,
-                #8134af
-              );
-            "
-          ></i>
+          <img src="/images/ios4 Icons/instagram.png" alt="" class="app-icon-img" />
           <span>Instagram</span>
         </a>
       </div>
@@ -255,7 +250,7 @@
             </button>
           </div>
         </div>
-        <div class="window-content glass-dark-content calculator">
+        <div class="window-content glass-content calculator">
           <input type="text" id="display" readonly />
           <div class="buttons">
             <button class="calc-button" onclick="appendToDisplay('7')">

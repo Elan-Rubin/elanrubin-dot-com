@@ -19,113 +19,115 @@
       html,
       body {
         height: 100%;
-        overflow: hidden;
+        overflow-y: auto;
         font-family: "Segoe UI", "Lucida Grande", "Lucida Sans Unicode",
           system-ui, sans-serif;
       }
 
       body {
-        background-image: url("/aurora.png");
+        background-image: url("/ios-4-2560-x-1600-da9g5d4mwg1dunim.jpg");
         background-size: cover;
-        background-position: center bottom;
+        background-position: top center;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
-        padding: 1.5rem 1rem;
-        gap: 0.85rem;
+        padding: 1.5rem 1rem 5rem;
+        gap: 1rem;
+        min-height: 100%;
       }
 
-      /* ── Header ──────────────────────────────────── */
-      header {
+      /* ── Window shell ────────────────────────────── */
+      .window {
         width: 100%;
-        text-align: center;
-        padding: 0.75rem 1.25rem;
-        border-radius: 0.75rem;
+        border-radius: 0.5rem;
+        overflow: hidden;
         background: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.35);
+        border: 1px solid rgba(255, 255, 255, 0.3);
         box-shadow:
-          0 8px 32px rgba(0, 0, 0, 0.15),
-          inset 0 1px 0 rgba(255, 255, 255, 0.55),
-          inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-        color: #fff;
-        position: relative;
-        overflow: hidden;
-        animation: fadeInDown 0.5s ease forwards;
-      }
-
-      header::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 50%;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent);
-        pointer-events: none;
-      }
-
-      header h1 {
-        font-size: 1.3rem;
-        font-weight: 600;
-        letter-spacing: 0.04em;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-        position: relative;
-      }
-
-      /* ── About card ──────────────────────────────── */
-      .about-card {
-        width: 100%;
-        padding: 1.1rem 1.25rem;
-        border-radius: 0.75rem;
-        background: rgba(255, 255, 255, 0.18);
-        backdrop-filter: blur(18px);
-        -webkit-backdrop-filter: blur(18px);
-        border: 1px solid rgba(255, 255, 255, 0.35);
-        box-shadow:
-          0 8px 32px rgba(0, 0, 0, 0.12),
+          0 8px 32px rgba(0, 0, 0, 0.18),
           inset 0 1px 0 rgba(255, 255, 255, 0.5),
-          inset 0 -1px 0 rgba(255, 255, 255, 0.08);
-        color: #fff;
+          inset 0 -1px 0 rgba(255, 255, 255, 0.1);
         position: relative;
-        overflow: hidden;
-        animation: fadeInUp 0.5s ease 0.1s both;
+        animation: fadeInDown 0.4s ease both;
       }
 
-      .about-card::before {
+      .window::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.8),
+          transparent
+        );
+        z-index: 1;
+      }
+
+      /* ── Window header ───────────────────────────── */
+      .window-header {
+        padding: 0.6rem 0.75rem;
+        background: linear-gradient(
+          180deg,
+          rgba(113, 136, 168, 0.97) 0%,
+          rgba(72, 99, 135, 0.97) 50%,
+          rgba(58, 83, 117, 0.97) 51%,
+          rgba(80, 108, 144, 0.97) 100%
+        );
+        border-bottom: 1px solid rgba(30, 50, 80, 0.6);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.45),
+          0 2px 8px rgba(0, 0, 0, 0.2);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+
+      .window-header::before {
         content: "";
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         height: 50%;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), transparent);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent);
         pointer-events: none;
       }
 
-      .about-card h2 {
-        font-size: 1rem;
+      .window-title {
+        font-size: 0.9375rem;
         font-weight: 700;
-        margin-bottom: 0.35rem;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        text-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.35),
+          0 -1px 0 rgba(0, 0, 0, 0.4);
+        letter-spacing: 0.01em;
       }
 
-      .about-card p {
+      /* ── Window content ──────────────────────────── */
+      .window-content {
+        padding: 0.9rem 1rem;
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        color: rgba(30, 30, 40, 0.95);
         font-size: 0.85rem;
-        line-height: 1.5;
-        color: rgba(255, 255, 255, 0.9);
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+        line-height: 1.55;
       }
 
       /* ── App icons grid ───────────────────────────── */
       .app-icons {
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.85rem 0.5rem;
-        animation: fadeIn 0.5s ease 0.2s both;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.25rem 0.5rem;
+        animation: fadeIn 0.4s ease 0.15s both;
       }
 
       .app-icon {
@@ -134,189 +136,179 @@
         align-items: center;
         text-decoration: none;
         color: #fff;
-        gap: 0.4rem;
+        gap: 0;
         transition: transform 0.2s ease;
       }
 
-      .app-icon i {
-        --icon-glow: 0.6;
-        font-size: 1.6rem;
-        width: 3.5rem;
-        height: 3.5rem;
-        border-radius: 1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-        border: 1px solid rgba(255, 255, 255, 0.45);
-        box-shadow:
-          0 4px 10px rgba(0, 0, 0, 0.35),
-          inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        position: relative;
-        overflow: hidden;
-        transition: all 0.25s ease;
-        /* Frutiger Aero radial glow from bottom */
-        background-image: radial-gradient(
-          farthest-corner at bottom center,
-          rgba(255, 255, 255, var(--icon-glow)),
-          transparent
-        );
+      .app-icon:active {
+        transform: scale(0.92);
       }
 
-      /* Glossy top-shine */
-      .app-icon i::after {
+      /* Plain PNG icon */
+      .app-icon-img {
+        width: 3.5rem;
+        height: 3.5rem;
+        display: block;
+        filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.5));
+        transition: all 300ms ease;
+        user-select: none;
+      }
+
+      /* Composite: Blank.png + tint overlay + FA icon */
+      .app-icon-composite {
+        position: relative;
+        width: 3.5rem;
+        height: 3.5rem;
+        display: block;
+        filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.5));
+        transition: all 300ms ease;
+      }
+
+      .app-icon-composite .app-icon-img {
+        filter: none;
+      }
+
+      .app-icon-composite::after {
         content: "";
         position: absolute;
-        top: 2px;
-        left: 2px;
-        right: 2px;
-        height: 45%;
-        background: linear-gradient(
-          to bottom,
-          rgba(255, 255, 255, 0.65),
-          rgba(255, 255, 255, 0.08)
-        );
-        border-radius: 0.85rem 0.85rem 0 0;
+        inset: 0;
+        background-color: var(--blank-tint, transparent);
+        background-image: var(--blank-gradient, none);
+        border-radius: 0.8rem;
+        mix-blend-mode: multiply;
         pointer-events: none;
       }
 
+      .app-icon-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #ffffff;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      /* Label pill */
       .app-icon span {
-        font-size: 0.75rem;
+        margin-top: 0.4rem;
+        font-size: 0.7rem;
+        font-weight: 500;
         text-align: center;
         white-space: nowrap;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #fff;
+        letter-spacing: 0.01em;
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        padding: 0.1rem 0.35rem;
+        border-radius: 0.3rem;
       }
 
-      .app-icon:active {
-        transform: scale(0.93);
-      }
-
-      .app-icon:active i {
-        box-shadow:
-          0 2px 4px rgba(0, 0, 0, 0.4),
-          inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      }
-
-      /* ── Footer bar ──────────────────────────────── */
+      /* ── Taskbar ─────────────────────────────────── */
       .taskbar {
-        width: 100%;
-        padding: 0.5rem 1rem;
-        border-radius: 0.65rem;
-        background: rgba(27, 20, 100, 0.7);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.55);
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0.45rem 1rem;
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        color: rgba(255, 255, 255, 0.6);
         font-size: 0.7rem;
         text-align: center;
-        animation: fadeInUp 0.5s ease 0.3s both;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
 
       /* ── Animations ──────────────────────────────── */
       @keyframes fadeInDown {
-        from {
-          opacity: 0;
-          transform: translateY(-12px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(14px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(-10px); }
+        to   { opacity: 1; transform: translateY(0); }
       }
 
       @keyframes fadeIn {
         from { opacity: 0; }
-        to { opacity: 1; }
+        to   { opacity: 1; }
       }
     </style>
   </head>
 
   <body>
-    <header>
-      <h1>elanrubin.com</h1>
-    </header>
 
-    <section class="about-card">
-      <h2>About Me</h2>
-      <p>
+    <!-- About Me window -->
+    <div class="window">
+      <div class="window-header">
+        <span class="window-title">About Me</span>
+      </div>
+      <div class="window-content">
         Hello! My name is Elan Rubin, and I'm a computer science student at
         Drexel University. My interests lie in the intersection between
         technology and art.
-      </p>
-    </section>
+      </div>
+    </div>
 
+    <!-- App icons -->
     <div class="app-icons">
-      <a
-        href="https://www.linkedin.com/in/elan-rubin/"
-        class="app-icon"
-        target="_blank"
-      >
-        <i class="fab fa-linkedin" style="background-color: #0a66c2"></i>
+
+      <a href="https://www.linkedin.com/in/elan-rubin/" class="app-icon" target="_blank">
+        <div class="app-icon-composite" style="--blank-tint: rgba(10, 102, 194, 0.6)">
+          <img src="/images/ios4 Icons/Blank.png" alt="" class="app-icon-img" />
+          <i class="fab fa-linkedin app-icon-overlay"></i>
+        </div>
         <span>LinkedIn</span>
       </a>
-      <a
-        href="https://github.com/Elan-Rubin"
-        class="app-icon"
-        target="_blank"
-      >
-        <i class="fab fa-github" style="background-color: #181717"></i>
+
+      <a href="https://github.com/Elan-Rubin" class="app-icon" target="_blank">
+        <div class="app-icon-composite" style="--blank-tint: rgba(30, 30, 30, 0.65)">
+          <img src="/images/ios4 Icons/Blank.png" alt="" class="app-icon-img" />
+          <i class="fab fa-github app-icon-overlay"></i>
+        </div>
         <span>GitHub</span>
       </a>
-      <a
-        href="https://drive.google.com/file/d/1TgctxSFvbBcZqebGM-rIrlLKlNhXgNFE/view?usp=sharing"
-        class="app-icon"
-        target="_blank"
-      >
-        <i class="fa-solid fa-file" style="background-color: #e20001"></i>
+
+      <a href="https://drive.google.com/file/d/1TgctxSFvbBcZqebGM-rIrlLKlNhXgNFE/view?usp=sharing" class="app-icon" target="_blank">
+        <img src="/images/ios4 Icons/Safari.png" alt="Resume" class="app-icon-img" />
         <span>Resume</span>
       </a>
-      <a
-        href="https://elanmakesgames.itch.io/"
-        class="app-icon"
-        target="_blank"
-      >
-        <i class="fa-brands fa-itch-io" style="background-color: #fa5c5c"></i>
+
+      <a class="app-icon" onclick="window.open('mailto:edr53@drexel.edu?subject=Hello%20Elan!&body=I%20love%20your%20website%20and%20am%20interested%20in%20hiring%20you.%0ASincerely%2C%0A%5BYour%20Name%5D'); return false;">
+        <img src="/images/ios4 Icons/Mail.png" alt="Email" class="app-icon-img" />
+        <span>Email</span>
+      </a>
+
+      <a href="https://elanmakesgames.itch.io/" class="app-icon" target="_blank">
+        <div class="app-icon-composite" style="--blank-tint: rgba(250, 92, 92, 0.6)">
+          <img src="/images/ios4 Icons/Blank.png" alt="" class="app-icon-img" />
+          <i class="fa-brands fa-itch-io app-icon-overlay"></i>
+        </div>
         <span>itch.io</span>
       </a>
-      <a
-        href="https://www.etsy.com/shop/Legoco"
-        class="app-icon"
-        target="_blank"
-      >
-        <i class="fab fa-etsy" style="background-color: #f16521"></i>
+
+      <a href="https://www.etsy.com/shop/Legoco" class="app-icon" target="_blank">
+        <div class="app-icon-composite" style="--blank-tint: rgba(241, 101, 33, 0.6)">
+          <img src="/images/ios4 Icons/Blank.png" alt="" class="app-icon-img" />
+          <i class="fab fa-etsy app-icon-overlay"></i>
+        </div>
         <span>Etsy</span>
       </a>
-      <a
-        href="https://www.instagram.com/elan_rubin/"
-        class="app-icon"
-        target="_blank"
-      >
-        <i
-          class="fab fa-instagram"
-          style="
-            background: linear-gradient(
-              45deg,
-              #f58529,
-              #dd2a7b,
-              #8134af,
-              #515bd4
-            );
-          "
-        ></i>
+
+      <a href="https://www.instagram.com/elan_rubin/" class="app-icon" target="_blank">
+        <img src="/images/ios4 Icons/instagram.png" alt="" class="app-icon-img" />
         <span>Instagram</span>
       </a>
+
     </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+      &copy; <script>document.write(new Date().getFullYear())</script> Elan Rubin &nbsp;|&nbsp; All rights reserved
+    </div>
+
   </body>
 </html>

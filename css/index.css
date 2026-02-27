@@ -75,12 +75,18 @@ html {
       12 12,
     auto;
   z-index: 10;
-  background: rgba(18, 137, 167, 0.8);
+  background: linear-gradient(
+    180deg,
+    rgba(113, 136, 168, 0.95) 0%,
+    rgba(72, 99, 135, 0.95) 50%,
+    rgba(58, 83, 117, 0.95) 51%,
+    rgba(80, 108, 144, 0.95) 100%
+  );
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    0 2px 8px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(30, 50, 80, 0.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.25);
   color: var(--color-white);
   display: flex;
   justify-content: space-between;
@@ -102,6 +108,13 @@ html {
 
 .window-title {
   margin-right: auto;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  /* iOS4 nav bar bevel: dark shadow below, white highlight above */
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35),
+    0 -1px 0 rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.01em;
 }
 
 .window-controls {
@@ -167,6 +180,7 @@ html {
 
 .calculator {
   margin: 0 auto;
+  background: rgba(210, 215, 222, 0.85);
 }
 
 #display {
@@ -286,9 +300,9 @@ html {
 #desktopSection {
   height: 100vh;
   /* background-image: url(../stacked-waves-haikei.svg); */
-  background-image: url(../aurora.png);
+  background-image: url(../ios-4-2560-x-1600-da9g5d4mwg1dunim.jpg);
   background-size: cover;
-  background-position: bottom;
+  background-position: top center;
   align-items: center;
 }
 
@@ -394,69 +408,92 @@ html {
     auto;
 }
 
-.app-icon i {
-  --icon-glow-intensity: 0.6;
-
-  font-size: 2.5rem;
+.app-icon-img {
   width: 4rem;
   height: 4rem;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
-  border-radius: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+  border-radius: 0;
+  filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.5));
   transition: all 300ms ease;
   user-select: none;
-
-  /* Add radial glow from bottom like Frutiger Aero buttons */
-  background-image: radial-gradient(
-    farthest-corner at bottom center,
-    rgba(255, 255, 255, var(--icon-glow-intensity)),
-    transparent
-  );
+  display: block;
 }
 
-.app-icon i::after {
+/* Composite icon: Blank.png as base with color tint overlay + FA icon on top */
+.app-icon-composite {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+  display: block;
+  filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.5));
+  transition: all 300ms ease;
+}
+
+.app-icon-composite .app-icon-img {
+  filter: none; /* parent handles drop-shadow */
+}
+
+/* Color tint layer over the blank base */
+.app-icon-composite::after {
   content: "";
   position: absolute;
-  top: 2px;
-  left: 2px;
-  right: 2px;
-  height: 45%;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.7),
-    rgba(255, 255, 255, 0.1)
-  );
-  border-radius: 0.9rem 0.9rem 0 0;
-  transition: background 400ms ease;
+  inset: 0;
+  background-color: var(--blank-tint, transparent);
+  border-radius: 0.9rem;
+  mix-blend-mode: multiply;
   pointer-events: none;
 }
 
+/* Gradient tint variant */
+.app-icon-composite--gradient::after {
+  background-color: transparent;
+  background-image: var(--blank-gradient, none);
+}
+
+/* FA icon centered on top of blank */
+.app-icon-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  color: #ffffff;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+  z-index: 2;
+}
+
 .app-icon:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
-.app-icon:hover i {
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
-  transform: translateY(-1px);
+.app-icon:hover .app-icon-img,
+.app-icon:hover .app-icon-composite {
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.55));
 }
 
-.app-icon:active i {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  transform: translateY(1px);
+.app-icon:active .app-icon-img,
+.app-icon:active .app-icon-composite {
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+  transform: translateY(2px);
 }
 
 .app-icon span {
-  margin-top: 0.5rem;
-  font-size: 1rem;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 500;
   text-align: center;
-  /* max-width: 60px; */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  /* blurry dark pill behind text for legibility */
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.3rem;
 }
 
 .app-icon:hover span {
@@ -467,7 +504,9 @@ html {
   position: absolute;
   bottom: 0;
   padding: 0.5rem;
-  background-color: var(--color-dark-navy);
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   width: 100%;
   color: var(--color-white);
   /* text-align: right; */
