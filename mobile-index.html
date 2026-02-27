@@ -20,8 +20,9 @@
       body {
         height: 100%;
         overflow-y: auto;
-        font-family: "Segoe UI", "Lucida Grande", "Lucida Sans Unicode",
-          system-ui, sans-serif;
+        font-family:
+          "Segoe UI", "Lucida Grande", "Lucida Sans Unicode", system-ui,
+          sans-serif;
       }
 
       body {
@@ -97,7 +98,11 @@
         left: 0;
         right: 0;
         height: 50%;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
         pointer-events: none;
       }
 
@@ -228,19 +233,28 @@
 
       /* ── Animations ──────────────────────────────── */
       @keyframes fadeInDown {
-        from { opacity: 0; transform: translateY(-10px); }
-        to   { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       @keyframes fadeIn {
-        from { opacity: 0; }
-        to   { opacity: 1; }
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
     </style>
   </head>
 
   <body>
-
     <!-- About Me window -->
     <div class="window">
       <div class="window-header">
@@ -255,9 +269,15 @@
 
     <!-- App icons -->
     <div class="app-icons">
-
-      <a href="https://www.linkedin.com/in/elan-rubin/" class="app-icon" target="_blank">
-        <div class="app-icon-composite" style="--blank-tint: rgba(10, 102, 194, 0.6)">
+      <a
+        href="https://www.linkedin.com/in/elan-rubin/"
+        class="app-icon"
+        target="_blank"
+      >
+        <div
+          class="app-icon-composite"
+          style="--blank-tint: rgba(10, 102, 194, 0.6)"
+        >
           <img src="/images/ios4 Icons/Blank.png" alt="" class="app-icon-img" />
           <i class="fab fa-linkedin app-icon-overlay"></i>
         </div>
@@ -265,50 +285,97 @@
       </a>
 
       <a href="https://github.com/Elan-Rubin" class="app-icon" target="_blank">
-        <div class="app-icon-composite" style="--blank-tint: rgba(30, 30, 30, 0.65)">
+        <div
+          class="app-icon-composite"
+          style="--blank-tint: rgba(30, 30, 30, 0.65)"
+        >
           <img src="/images/ios4 Icons/Blank.png" alt="" class="app-icon-img" />
           <i class="fab fa-github app-icon-overlay"></i>
         </div>
         <span>GitHub</span>
       </a>
 
-      <a href="https://drive.google.com/file/d/1TgctxSFvbBcZqebGM-rIrlLKlNhXgNFE/view?usp=sharing" class="app-icon" target="_blank">
-        <img src="/images/ios4 Icons/Safari.png" alt="Resume" class="app-icon-img" />
+      <a
+        href="https://drive.google.com/file/d/1TgctxSFvbBcZqebGM-rIrlLKlNhXgNFE/view?usp=sharing"
+        class="app-icon"
+        target="_blank"
+      >
+        <img
+          src="/images/ios4 Icons/Safari.png"
+          alt="Resume"
+          class="app-icon-img"
+        />
         <span>Resume</span>
       </a>
 
-      <a class="app-icon" onclick="window.open('mailto:edr53@drexel.edu?subject=Hello%20Elan!&body=I%20love%20your%20website%20and%20am%20interested%20in%20hiring%20you.%0ASincerely%2C%0A%5BYour%20Name%5D'); return false;">
-        <img src="/images/ios4 Icons/Mail.png" alt="Email" class="app-icon-img" />
+      <a
+        class="app-icon"
+        onclick="
+          window.open(
+            'mailto:edr53@drexel.edu?subject=Hello%20Elan!&body=I%20love%20your%20website%20and%20am%20interested%20in%20hiring%20you.%0ASincerely%2C%0A%5BYour%20Name%5D',
+          );
+          return false;
+        "
+      >
+        <img
+          src="/images/ios4 Icons/Mail.png"
+          alt="Email"
+          class="app-icon-img"
+        />
         <span>Email</span>
       </a>
 
-      <a href="https://elanmakesgames.itch.io/" class="app-icon" target="_blank">
-        <div class="app-icon-composite" style="--blank-tint: rgba(250, 92, 92, 0.6)">
+      <a
+        href="https://elanmakesgames.itch.io/"
+        class="app-icon"
+        target="_blank"
+      >
+        <div
+          class="app-icon-composite"
+          style="--blank-tint: rgba(250, 92, 92, 0.6)"
+        >
           <img src="/images/ios4 Icons/Blank.png" alt="" class="app-icon-img" />
           <i class="fa-brands fa-itch-io app-icon-overlay"></i>
         </div>
         <span>itch.io</span>
       </a>
 
-      <a href="https://www.etsy.com/shop/Legoco" class="app-icon" target="_blank">
-        <div class="app-icon-composite" style="--blank-tint: rgba(241, 101, 33, 0.6)">
+      <a
+        href="https://www.etsy.com/shop/Legoco"
+        class="app-icon"
+        target="_blank"
+      >
+        <div
+          class="app-icon-composite"
+          style="--blank-tint: rgba(241, 101, 33, 0.6)"
+        >
           <img src="/images/ios4 Icons/Blank.png" alt="" class="app-icon-img" />
           <i class="fab fa-etsy app-icon-overlay"></i>
         </div>
         <span>Etsy</span>
       </a>
 
-      <a href="https://www.instagram.com/elan_rubin/" class="app-icon" target="_blank">
-        <img src="/images/ios4 Icons/instagram.png" alt="" class="app-icon-img" />
+      <a
+        href="https://www.instagram.com/elan_rubin/"
+        class="app-icon"
+        target="_blank"
+      >
+        <img
+          src="/images/ios4 Icons/instagram.png"
+          alt=""
+          class="app-icon-img"
+        />
         <span>Instagram</span>
       </a>
-
     </div>
 
     <!-- Taskbar -->
     <div class="taskbar">
-      &copy; <script>document.write(new Date().getFullYear())</script> Elan Rubin &nbsp;|&nbsp; All rights reserved
+      &copy;
+      <script>
+        document.write(new Date().getFullYear());
+      </script>
+      Elan Rubin &nbsp;|&nbsp; All rights reserved
     </div>
-
   </body>
 </html>

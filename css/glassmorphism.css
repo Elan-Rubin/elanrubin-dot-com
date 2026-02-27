@@ -17,7 +17,7 @@
 
 /* Highlight edge effect for top of glass elements */
 .glass-window::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -33,7 +33,7 @@
 
 /* Left edge highlight */
 .glass-window::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -86,17 +86,13 @@
 
 /* Glossy shine on header */
 .glass-header::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 50%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent);
   pointer-events: none;
 }
 
@@ -133,17 +129,13 @@
 
 /* Glossy button shine */
 .glass-button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 50%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent);
   border-radius: 0.5rem 0.5rem 0 0;
   pointer-events: none;
 }
@@ -207,17 +199,13 @@
 }
 
 .glass-icon::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 60%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.6),
-    transparent
-  );
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), transparent);
   border-radius: 1rem;
   pointer-events: none;
 }

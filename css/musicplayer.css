@@ -29,7 +29,11 @@
       rgba(255, 255, 255, var(--item-glow-intensity)),
       transparent
     ),
-    linear-gradient(to bottom, rgba(200, 210, 220, 0.6), rgba(230, 235, 240, 0.7));
+    linear-gradient(
+      to bottom,
+      rgba(200, 210, 220, 0.6),
+      rgba(230, 235, 240, 0.7)
+    );
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
   color: rgba(40, 40, 50, 0.9);
   font-weight: 600;
@@ -39,7 +43,7 @@
 }
 
 .playlist-item::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 2px;
   left: 2px;
@@ -67,7 +71,11 @@
       rgba(255, 255, 255, 0.7),
       transparent
     ),
-    linear-gradient(to bottom, rgba(18, 137, 167, 0.75), rgba(18, 137, 167, 0.9));
+    linear-gradient(
+      to bottom,
+      rgba(18, 137, 167, 0.75),
+      rgba(18, 137, 167, 0.9)
+    );
   border: 1px solid rgba(18, 137, 167, 0.6);
   color: rgba(255, 255, 255, 0.95);
   font-weight: 700;
@@ -111,7 +119,11 @@
       rgba(255, 255, 255, var(--control-glow-intensity)),
       transparent
     ),
-    linear-gradient(to bottom, rgba(18, 137, 167, 0.75), rgba(18, 137, 167, 0.9));
+    linear-gradient(
+      to bottom,
+      rgba(18, 137, 167, 0.75),
+      rgba(18, 137, 167, 0.9)
+    );
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
   color: rgba(255, 255, 255, 0.95);
   transition: all 300ms ease;
@@ -123,7 +135,7 @@
 }
 
 .control-button::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 8%;
   left: 10%;
@@ -183,17 +195,13 @@
 }
 
 .progress-bar::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 50%;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent);
   border-radius: 3px 3px 0 0;
 }
 
